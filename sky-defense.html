@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Sky Defense - S M Mazharul Hoque Chowdhury</title>
+<style>
+:root{
+  --bg0:#06101c;
+  --bg1:#0b1830;
+  --panel:rgba(17,25,47,.84);
+  --border:rgba(255,255,255,.12);
+  --text:#ecf3ff;
+  --muted:#9fb0c8;
+  --sky:#67c4ff;
+  --indigo:#6d72ff;
+  --green:#7fff95;
+  --red:#ff7a7a;
+  --gold:#ffd45b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Inter,system-ui,sans-serif;
+  background:
+    radial-gradient(circle at top,rgba(103,196,255,.1),transparent 28%),
+    linear-gradient(180deg,var(--bg1),var(--bg0));
+  color:var(--text);
+  min-height:100vh;
+}
+a{color:inherit}
+.wrap{
+  min-height:100vh;
+  padding:20px;
+  display:grid;
+  place-items:center;
+}
+.shell{
+  width:min(1280px,100%);
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:28px;
+  box-shadow:0 24px 80px rgba(0,0,0,.32);
+  overflow:hidden;
+}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  align-items:flex-start;
+  padding:22px 24px 18px;
+  border-bottom:1px solid var(--border);
+  background:rgba(0,0,0,.18);
+}
+.title h1{
+  margin:0;
+  font-size:clamp(1.6rem,3vw,2.5rem);
+  line-height:1.02;
+}
+.title p{
+  margin:10px 0 0;
+  color:var(--muted);
+  max-width:760px;
+  line-height:1.65;
+  font-size:.97rem;
+}
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:0 16px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.06);
+  color:var(--text);
+  text-decoration:none;
+  font-weight:700;
+}
+.btn.primary{
+  background:linear-gradient(135deg,var(--sky),var(--indigo));
+  border-color:transparent;
+  color:#04101f;
+}
+.hud{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(92px,1fr));
+  gap:10px;
+  padding:16px 24px 0;
+}
+.launch-panel{
+  margin:18px 24px 0;
+  padding:24px;
+  border-radius:24px;
+  border:1px solid var(--border);
+  background:
+    radial-gradient(circle at 18% 18%,rgba(103,196,255,.14),transparent 26%),
+    linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
+}
+.launch-grid{
+  display:grid;
+  grid-template-columns:minmax(320px,1.05fr) minmax(280px,.95fr);
+  gap:24px;
+  align-items:center;
+}
+.launch-copy h2{
+  margin:0 0 10px;
+  font-size:clamp(1.4rem,2vw,2rem);
+}
+.launch-copy p{
+  margin:0 0 18px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.launch-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:18px;
+}
+.launch-art{
+  min-height:260px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(180deg,#091424,#102447);
+}
+.launch-art svg{
+  display:block;
+  width:100%;
+  height:100%;
+}
+.how-card{
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:18px;
+  background:rgba(0,0,0,.18);
+  overflow:hidden;
+}
+.how-card[hidden]{display:none}
+.how-card-inner{
+  padding:18px 18px 16px;
+}
+.how-card h3{
+  margin:0 0 12px;
+  font-size:1rem;
+}
+.how-card ul{
+  margin:0;
+  padding-left:18px;
+  color:var(--muted);
+  line-height:1.75;
+}
+.how-card li + li{margin-top:6px}
+.stat{
+  padding:12px 14px;
+  border-radius:18px;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--border);
+}
+.stat .label{
+  color:var(--muted);
+  font-size:.7rem;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.stat .value{
+  margin-top:4px;
+  font-size:1.15rem;
+  font-weight:800;
+}
+.stage{
+  padding:16px 16px 18px;
+}
+.canvas-wrap{
+  position:relative;
+  overflow:hidden;
+  border-radius:24px;
+  border:1px solid var(--border);
+  background:#081222;
+}
+canvas{
+  display:block;
+  width:100%;
+  height:min(74vh,820px);
+  min-height:520px;
+  cursor:none;
+}
+.legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 18px;
+  padding:14px 4px 0;
+  color:var(--muted);
+  font-size:.88rem;
+}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot.green{background:var(--green)}
+.dot.red{background:var(--red)}
+.dot.gold{background:var(--gold)}
+@media (max-width:900px){
+  .topbar{flex-direction:column}
+  .launch-grid{grid-template-columns:1fr}
+  .hud{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:600px){
+  .wrap{padding:12px}
+  .shell{border-radius:22px}
+  .topbar{padding:18px 16px 14px}
+  .launch-panel{margin:14px 16px 0;padding:18px}
+  .launch-actions{flex-direction:column}
+  .hud{padding:14px 16px 0;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stage{padding:14px}
+  canvas{min-height:420px;height:62vh}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="shell">
+    <div class="topbar">
+      <div class="title">
+        <h1>Sky Defense: Red vs Green</h1>
+        <p>Red jets hunt. Green jets flee. Aim with the mouse and left-click or hold to fire. Hitting red aircraft scores points, and different hit locations deal different damage.</p>
+      </div>
+      <div class="actions">
+        <a class="btn" href="./index.html">Back to Website</a>
+        <button class="btn primary" id="restart-btn" type="button">Restart Mission</button>
+      </div>
+    </div>
+    <section class="launch-panel" aria-labelledby="launch-title">
+      <div class="launch-grid">
+        <div class="launch-copy">
+          <h2 id="launch-title">Mission Briefing</h2>
+          <p>Defend the green squadron against aggressive red fighters. Track fast-moving jets, manage your accuracy, and try to clear as many rounds in a row as possible before the green formation is wiped out.</p>
+          <div class="launch-actions">
+            <button class="btn primary" id="start-btn" type="button">Start Game</button>
+            <button class="btn" id="how-btn" type="button" aria-expanded="false" aria-controls="how-card">How to Play</button>
+          </div>
+          <div class="how-card" id="how-card" hidden>
+            <div class="how-card-inner">
+              <h3>How to Play</h3>
+              <ul>
+                <li>Move the mouse to aim the cannon and left-click or hold to fire.</li>
+                <li>Destroy all red jets to clear the round and advance automatically.</li>
+                <li>Green jets occasionally boost to escape, but if they are all eliminated the run ends.</li>
+                <li>Your summary appears after a loss, showing cleared rounds, time taken, and bullet usage.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="launch-art" aria-label="Illustration of fighter aircraft in combat">
+          <svg viewBox="0 0 720 420" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="skyGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#081321"/>
+                <stop offset="55%" stop-color="#11264c"/>
+                <stop offset="100%" stop-color="#1a325c"/>
+              </linearGradient>
+              <radialGradient id="blast" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#fff1b0"/>
+                <stop offset="45%" stop-color="#ffd45b"/>
+                <stop offset="100%" stop-color="rgba(255,212,91,0)"/>
+              </radialGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="4" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <rect width="720" height="420" fill="url(#skyGrad)"/>
+            <circle cx="515" cy="130" r="66" fill="url(#blast)" opacity=".95"/>
+            <g opacity=".3" stroke="#75beff">
+              <path d="M0 330C120 290 168 290 268 312S458 380 720 348" fill="none"/>
+              <path d="M0 94C120 144 238 152 354 136S552 64 720 94" fill="none"/>
+            </g>
+            <g fill="none" stroke="#7fd1ff" stroke-width="3" stroke-linecap="round" opacity=".95">
+              <path d="M160 132L262 164"/>
+              <path d="M168 148L284 186"/>
+              <path d="M176 164L304 202"/>
+            </g>
+            <g fill="none" stroke="#ff9d9d" stroke-width="3.4" stroke-linecap="round" opacity=".95">
+              <path d="M538 200L424 188"/>
+              <path d="M532 216L404 212"/>
+            </g>
+            <g transform="translate(214 158) rotate(10)">
+              <path d="M88 0L28 -18L-10 -16L-44 -42L-34 -10L-104 -4L-120 0L-104 4L-34 10L-44 42L-10 16L28 18L88 0Z" fill="#8cf999" stroke="#dfffe2" stroke-width="4" filter="url(#glow)"/>
+              <ellipse cx="34" cy="0" rx="18" ry="8" fill="#d7f7ff"/>
+              <path d="M-104 -4L-132 -14L-126 0L-132 14L-104 4Z" fill="#b3fff9"/>
+            </g>
+            <g transform="translate(516 210) rotate(188)">
+              <path d="M96 0L30 -20L-10 -18L-48 -46L-36 -12L-112 -4L-132 0L-112 4L-36 12L-48 46L-10 18L30 20L96 0Z" fill="#ff7474" stroke="#ffd0d0" stroke-width="4" filter="url(#glow)"/>
+              <ellipse cx="38" cy="0" rx="18" ry="8" fill="#ffe7e7"/>
+              <path d="M-112 -4L-144 -14L-136 0L-144 14L-112 4Z" fill="#ffd99f"/>
+            </g>
+            <g fill="#ffffff" opacity=".9">
+              <circle cx="112" cy="66" r="2.2"/>
+              <circle cx="182" cy="48" r="1.4"/>
+              <circle cx="624" cy="82" r="1.8"/>
+              <circle cx="650" cy="318" r="2.2"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+    <div class="hud" id="hud"></div>
+    <div class="stage">
+      <div class="canvas-wrap">
+        <canvas id="game-canvas" aria-label="Sky Defense fighter jet game"></canvas>
+      </div>
+      <div class="legend">
+        <span><i class="dot green"></i>Green squadron survives by evasion</span>
+        <span><i class="dot red"></i>Red squadron hunts aggressively</span>
+        <span><i class="dot gold"></i>Your cannon targets red jets</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+'use strict';
+
+const canvas = document.getElementById('game-canvas');
+const ctx = canvas.getContext('2d');
+const hudEl = document.getElementById('hud');
+const restartBtn = document.getElementById('restart-btn');
+const startBtn = document.getElementById('start-btn');
+const howBtn = document.getElementById('how-btn');
+const howCard = document.getElementById('how-card');
+
+const hudItems = [
+  ['Round', 'round'],
+  ['Cleared', 'cleared'],
+  ['Score', 'score'],
+  ['Green Left', 'greenAlive'],
+  ['Red Left', 'redAlive'],
+  ['Shots', 'shots'],
+  ['Accuracy', 'accuracy'],
+  ['Time', 'elapsed']
+];
+
+hudEl.innerHTML = hudItems.map(([label, key]) => `
+  <div class="stat">
+    <div class="label">${label}</div>
+    <div class="value" data-key="${key}">0</div>
+  </div>
+`).join('');
+
+function updateHud(hud){
+  const accuracy = hud.shots ? Math.round((hud.hits / hud.shots) * 100) : 0;
+  const values = {
+    round: hud.round,
+    cleared: hud.cleared,
+    score: hud.score,
+    greenAlive: hud.greenAlive,
+    redAlive: hud.redAlive,
+    shots: hud.shots,
+    accuracy: accuracy + '%',
+    elapsed: hud.elapsed.toFixed(1) + 's'
+  };
+  hudEl.querySelectorAll('[data-key]').forEach(el => {
+    el.textContent = values[el.dataset.key];
+  });
+}
+
+let animationRef = null;
+let state = null;
+let campaign = null;
+
+function resetCampaign() {
+  campaign = {
+    currentRound: 1,
+    cleared: 0,
+    rounds: [],
+  };
+}
+
+function makeState(){
+  const DPR = () => Math.min(window.devicePixelRatio || 1, 2);
+  const W = () => canvas.clientWidth;
+  const H = () => canvas.clientHeight;
+  const rand = (a, b) => Math.random() * (b - a) + a;
+  const dist = (x1, y1, x2, y2) => Math.hypot(x2 - x1, y2 - y1);
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  const normalizeAngle = (a) => {
+    while (a > Math.PI) a -= Math.PI * 2;
+    while (a < -Math.PI) a += Math.PI * 2;
+    return a;
+  };
+  const lerpAngle = (from, to, t) => from + normalizeAngle(to - from) * t;
+
+  function resize(){
+    const dpr = DPR();
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function makeJet(team, i) {
+    const x = rand(120, W() - 120);
+    const y = rand(90, H() - 160);
+    const angle = rand(0, Math.PI * 2);
+    return {
+      id: `${team}-${i}-${Math.random().toString(36).slice(2, 9)}`,
+      team,
+      x,
+      y,
+      angle,
+      speed: team === 'green' ? rand(1.56, 1.95) : rand(2.2, 2.72),
+      turnRate: team === 'green' ? rand(0.035, 0.072) : rand(0.05, 0.094),
+      sharpTurnBoost: team === 'green' ? rand(1.7, 2.35) : rand(2.05, 2.75),
+      size: 12,
+      hp: team === 'green' ? 220 : 145,
+      maxHp: team === 'green' ? 220 : 145,
+      cooldown: team === 'green' ? rand(1100, 2100) : rand(760, 1420),
+      alive: true,
+      wanderAngle: rand(-Math.PI, Math.PI),
+      wanderTimer: rand(20, 70),
+      sharpTurnTimer: rand(18, 55),
+      boostTimer: team === 'green' ? rand(0, 1800) : 0,
+      boostCooldown: team === 'green' ? rand(0, 2200) : 0,
+      hitFlash: 0,
+    };
+  }
+
+  return {
+    resize, W, H, rand, dist, clamp, lerpAngle,
+    mouse: { x: W() / 2, y: H() / 2, down: false },
+    jets: [
+      ...Array.from({ length: 7 }, (_, i) => makeJet('green', i)),
+      ...Array.from({ length: 10 }, (_, i) => makeJet('red', i)),
+    ],
+    bullets: [],
+    particles: [],
+    score: 0,
+    shots: 0,
+    hits: 0,
+    elapsed: 0,
+    lastTime: 0,
+    playerCooldown: 0,
+    roundComplete: false,
+    nextRoundAt: 0,
+    gameOver: false,
+    win: false,
+    stars: Array.from({ length: 90 }, () => ({ x: rand(0, W()), y: rand(0, H()), r: rand(0.5, 1.8) })),
+  };
+}
+
+function startRound(resetProgress = false){
+  if (resetProgress || !campaign) resetCampaign();
+  cancelAnimationFrame(animationRef);
+  state = makeState();
+  state.resize();
+  refreshHud();
+  state.lastTime = performance.now();
+  animationRef = requestAnimationFrame(tick);
+}
+
+function startGame(){
+  startRound(true);
+}
+
+function getLiving(team) {
+  return state.jets.filter((j) => j.alive && (!team || j.team === team));
+}
+
+function nearestEnemy(jet) {
+  const enemies = state.jets.filter((j) => j.alive && j.team !== jet.team);
+  if (!enemies.length) return null;
+  let best = enemies[0];
+  let bestD = state.dist(jet.x, jet.y, best.x, best.y);
+  for (let i = 1; i < enemies.length; i++) {
+    const d = state.dist(jet.x, jet.y, enemies[i].x, enemies[i].y);
+    if (d < bestD) {
+      best = enemies[i];
+      bestD = d;
+    }
+  }
+  return best;
+}
+
+function nearestThreatBullet(jet) {
+  let best = null;
+  let bestDistance = Infinity;
+  for (const bullet of state.bullets) {
+    if (bullet.life <= 0 || bullet.owner !== 'player') continue;
+    const dx = bullet.x - jet.x;
+    const dy = bullet.y - jet.y;
+    const distance = Math.hypot(dx, dy);
+    if (distance > 170) continue;
+    const closing = dx * bullet.vx + dy * bullet.vy;
+    if (closing >= 0) continue;
+    if (distance < bestDistance) {
+      best = bullet;
+      bestDistance = distance;
+    }
+  }
+  return best;
+}
+
+function createExplosion(x, y, color, count = 18) {
+  for (let i = 0; i < count; i++) {
+    state.particles.push({
+      x, y,
+      vx: state.rand(-2.8, 2.8),
+      vy: state.rand(-2.8, 2.8),
+      life: state.rand(22, 42),
+      maxLife: state.rand(22, 42),
+      color,
+      size: state.rand(1.4, 3.8),
+    });
+  }
+}
+
+function refreshHud() {
+  updateHud({
+    round: campaign ? campaign.currentRound : 1,
+    cleared: campaign ? campaign.cleared : 0,
+    score: state.score,
+    greenAlive: getLiving('green').length,
+    redAlive: getLiving('red').length,
+    shots: state.shots,
+    hits: state.hits,
+    elapsed: state.elapsed
+  });
+}
+
+function killJet(jet, byPlayer = false) {
+  if (!jet.alive) return;
+  jet.alive = false;
+  createExplosion(jet.x, jet.y, jet.team === 'red' ? '#ff5c5c' : '#6dff82', 28);
+  if (byPlayer && jet.team === 'red') state.score += 100;
+  refreshHud();
+}
+
+function shootBullet(fromX, fromY, toX, toY, owner, color, speed = 4.2, damage = 22) {
+  const angle = Math.atan2(toY - fromY, toX - fromX);
+  state.bullets.push({
+    x: fromX,
+    y: fromY,
+    vx: Math.cos(angle) * speed,
+    vy: Math.sin(angle) * speed,
+    owner,
+    color,
+    damage,
+    life: 180,
+  });
+}
+
+function getPlayerDamageMultiplier(jet, bx, by) {
+  const dx = bx - jet.x;
+  const dy = by - jet.y;
+  const ca = Math.cos(-jet.angle);
+  const sa = Math.sin(-jet.angle);
+  const lx = dx * ca - dy * sa;
+  const ly = dx * sa + dy * ca;
+  const nose = state.dist(lx, ly, 10, 0);
+  const wing = Math.min(state.dist(lx, ly, -1, -8), state.dist(lx, ly, -1, 8));
+  const tail = state.dist(lx, ly, -8, 0);
+  if (nose < 5) return 2.2;
+  if (wing < 5) return 1.45;
+  if (tail < 4) return 1.15;
+  return 0.8;
+}
+
+function firePlayer() {
+  if (state.playerCooldown > 0 || state.gameOver) return;
+  state.playerCooldown = 15;
+  state.shots += 1;
+  const startX = state.clamp(state.mouse.x, 20, state.W() - 20);
+  const startY = state.H() - 26;
+  shootBullet(startX, startY, state.mouse.x, state.mouse.y, 'player', '#ffd54a', 6.1, 28);
+  refreshHud();
+}
+
+function drawBackground() {
+  const gradient = ctx.createLinearGradient(0, 0, 0, state.H());
+  gradient.addColorStop(0, '#07111f');
+  gradient.addColorStop(1, '#0b2341');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, state.W(), state.H());
+  for (const s of state.stars) {
+    ctx.globalAlpha = 0.75;
+    ctx.fillStyle = 'white';
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+}
+
+function drawJet(jet) {
+  ctx.save();
+  ctx.translate(jet.x, jet.y);
+  ctx.rotate(jet.angle);
+  const baseBody = jet.team === 'green' ? '#54ff6a' : '#ff4d4d';
+  const body = jet.hitFlash > 0 ? '#ffffff' : baseBody;
+  const glow = jet.team === 'green' ? 'rgba(84,255,106,0.18)' : 'rgba(255,77,77,0.18)';
+  const darkMetal = jet.team === 'green' ? '#174f2a' : '#5a1818';
+  const wingShade = jet.team === 'green' ? '#8dff9e' : '#ff9a9a';
+  const flameCore = jet.team === 'green' ? '#b7fff1' : '#ffe8ad';
+  ctx.shadowColor = glow;
+  ctx.shadowBlur = 10;
+
+  if (jet.team === 'green' && jet.boostTimer > 0) {
+    ctx.fillStyle = 'rgba(130, 255, 235, 0.75)';
+    ctx.beginPath();
+    ctx.moveTo(-13, 0);
+    ctx.lineTo(-22 - Math.random() * 6, -3.4);
+    ctx.lineTo(-18, 0);
+    ctx.lineTo(-22 - Math.random() * 6, 3.4);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  ctx.fillStyle = darkMetal;
+  ctx.beginPath();
+  ctx.moveTo(16, 0);
+  ctx.lineTo(5.5, -3.2);
+  ctx.lineTo(-1.5, -3.6);
+  ctx.lineTo(-10.5, -2.6);
+  ctx.lineTo(-13.5, 0);
+  ctx.lineTo(-10.5, 2.6);
+  ctx.lineTo(-1.5, 3.6);
+  ctx.lineTo(5.5, 3.2);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = body;
+  ctx.beginPath();
+  ctx.moveTo(17, 0);
+  ctx.lineTo(7.5, -2.8);
+  ctx.lineTo(0.5, -2.9);
+  ctx.lineTo(-8.5, -1.9);
+  ctx.lineTo(-11.6, 0);
+  ctx.lineTo(-8.5, 1.9);
+  ctx.lineTo(0.5, 2.9);
+  ctx.lineTo(7.5, 2.8);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = wingShade;
+  ctx.beginPath();
+  ctx.moveTo(2.4, -2.1);
+  ctx.lineTo(-5.6, -10.5);
+  ctx.lineTo(-10.8, -10.9);
+  ctx.lineTo(-5.8, -2);
+  ctx.closePath();
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(2.4, 2.1);
+  ctx.lineTo(-5.6, 10.5);
+  ctx.lineTo(-10.8, 10.9);
+  ctx.lineTo(-5.8, 2);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = darkMetal;
+  ctx.beginPath();
+  ctx.moveTo(-5.6, -2.4);
+  ctx.lineTo(-11.8, -8.4);
+  ctx.lineTo(-10.1, -1.4);
+  ctx.closePath();
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(-5.6, 2.4);
+  ctx.lineTo(-11.8, 8.4);
+  ctx.lineTo(-10.1, 1.4);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(-9.2, -1.8);
+  ctx.lineTo(-12.8, -7.6);
+  ctx.lineTo(-10.1, -7.9);
+  ctx.lineTo(-7.6, -1.7);
+  ctx.closePath();
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(-9.2, 1.8);
+  ctx.lineTo(-12.8, 7.6);
+  ctx.lineTo(-10.1, 7.9);
+  ctx.lineTo(-7.6, 1.7);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = 'rgba(220,242,255,0.95)';
+  ctx.beginPath();
+  ctx.ellipse(5.5, 0, 3.4, 1.7, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.42)';
+  ctx.lineWidth = 0.9;
+  ctx.beginPath();
+  ctx.moveTo(11.8, 0);
+  ctx.lineTo(-7.4, 0);
+  ctx.stroke();
+
+  ctx.fillStyle = flameCore;
+  ctx.beginPath();
+  ctx.moveTo(-11.4, 0);
+  ctx.lineTo(-15.8, -1.35);
+  ctx.lineTo(-14.6, 0);
+  ctx.lineTo(-15.8, 1.35);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = 'rgba(255,255,255,0.14)';
+  ctx.fillRect(-12, 11, 24, 3);
+  ctx.fillStyle = baseBody;
+  ctx.fillRect(-12, 11, 24 * (jet.hp / jet.maxHp), 3);
+  ctx.restore();
+}
+
+function drawBullet(b) {
+  ctx.strokeStyle = b.color;
+  ctx.lineWidth = 2.1;
+  ctx.beginPath();
+  ctx.moveTo(b.x, b.y);
+  ctx.lineTo(b.x - b.vx * 1.7, b.y - b.vy * 1.7);
+  ctx.stroke();
+}
+
+function drawParticles() {
+  for (const p of state.particles) {
+    ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+}
+
+function drawCrosshair() {
+  const { x, y } = state.mouse;
+  ctx.strokeStyle = 'rgba(255,255,255,0.92)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(x, y, 14, 0, Math.PI * 2);
+  ctx.moveTo(x - 22, y);
+  ctx.lineTo(x - 8, y);
+  ctx.moveTo(x + 8, y);
+  ctx.lineTo(x + 22, y);
+  ctx.moveTo(x, y - 22);
+  ctx.lineTo(x, y - 8);
+  ctx.moveTo(x, y + 8);
+  ctx.lineTo(x, y + 22);
+  ctx.stroke();
+}
+
+function drawPlayerCannon() {
+  const x = state.clamp(state.mouse.x, 30, state.W() - 30);
+  const y = state.H() - 20;
+  const angle = Math.atan2(state.mouse.y - y, state.mouse.x - x);
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  ctx.fillStyle = '#d7e4ff';
+  ctx.fillRect(-7, -6, 30, 12);
+  ctx.fillStyle = '#90a8d8';
+  ctx.fillRect(-18, -11, 20, 22);
+  ctx.restore();
+}
+
+function drawOverlay() {
+  if (!state.gameOver && !state.roundComplete) return;
+  ctx.fillStyle = 'rgba(0,0,0,0.58)';
+  ctx.fillRect(0, 0, state.W(), state.H());
+  if (state.roundComplete) {
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.font = '700 34px system-ui, sans-serif';
+    ctx.fillText(`Round ${campaign.currentRound - 1} Cleared`, state.W() / 2, state.H() / 2 - 24);
+    ctx.font = '500 18px system-ui, sans-serif';
+    ctx.fillText(
+      `Advancing to Round ${campaign.currentRound}...`,
+      state.W() / 2,
+      state.H() / 2 + 10
+    );
+    return;
+  }
+
+  const panelWidth = Math.min(620, state.W() - 64);
+  const rowHeight = 30;
+  const top = Math.max(48, state.H() / 2 - 170);
+  const left = (state.W() - panelWidth) / 2;
+  const summaryLines = campaign.rounds.map((round) =>
+    round.result === 'won'
+      ? `Round ${round.round}: Took ${round.time.toFixed(1)} s and ${round.shots} bullets`
+      : `Round ${round.round}: Lost`
+  );
+  const panelHeight = 170 + summaryLines.length * rowHeight;
+
+  ctx.fillStyle = 'rgba(8,18,34,0.92)';
+  ctx.fillRect(left, top, panelWidth, panelHeight);
+  ctx.strokeStyle = 'rgba(255,255,255,0.16)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(left, top, panelWidth, panelHeight);
+
+  ctx.fillStyle = 'white';
+  ctx.textAlign = 'left';
+  ctx.font = '700 32px system-ui, sans-serif';
+  ctx.fillText('Mission Summary', left + 28, top + 46);
+  ctx.font = '600 18px system-ui, sans-serif';
+  ctx.fillStyle = '#b8c8df';
+  ctx.fillText(`${campaign.cleared} rounds cleared`, left + 28, top + 78);
+
+  ctx.font = '500 17px system-ui, sans-serif';
+  ctx.fillStyle = '#e8eefb';
+  summaryLines.forEach((line, index) => {
+    ctx.fillText(line, left + 28, top + 114 + index * rowHeight);
+  });
+
+  const rx = left + 28;
+  const ry = top + panelHeight - 66;
+  const rw = 190;
+  const rh = 44;
+  state.restartButton = { x: rx, y: ry, w: rw, h: rh };
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(rx, ry, rw, rh);
+  ctx.fillStyle = '#111827';
+  ctx.textAlign = 'center';
+  ctx.font = '700 18px system-ui, sans-serif';
+  ctx.fillText('Restart Mission', rx + rw / 2, ry + 28);
+}
+
+function tick(ts) {
+  const dtRaw = (ts - state.lastTime) / 16.6667 || 1;
+  const dt = Math.min(2, Math.max(0.5, dtRaw));
+  state.lastTime = ts;
+  drawBackground();
+
+  if (!state.gameOver && !state.roundComplete) {
+    state.elapsed += (16.6667 * dt) / 1000;
+    state.playerCooldown = Math.max(0, state.playerCooldown - dt);
+    if (state.mouse.down && state.playerCooldown <= 0) firePlayer();
+
+    for (const jet of state.jets) {
+      if (!jet.alive) continue;
+      jet.hitFlash = Math.max(0, jet.hitFlash - dt);
+      jet.wanderTimer -= dt;
+      jet.sharpTurnTimer -= dt;
+      if (jet.team === 'green') {
+        if (jet.boostTimer > 0) {
+          jet.boostTimer -= 16.6667 * dt;
+        } else {
+          jet.boostCooldown -= 16.6667 * dt;
+          if (jet.boostCooldown <= 0) {
+            jet.boostTimer = 1000;
+            jet.boostCooldown = 3000;
+          }
+        }
+      }
+      if (jet.wanderTimer <= 0) {
+        jet.wanderAngle = state.rand(-Math.PI, Math.PI);
+        jet.wanderTimer = state.rand(18, 60);
+      }
+      const enemy = nearestEnemy(jet);
+      let desiredAngle = jet.angle + jet.wanderAngle * 0.015;
+      if (enemy) {
+        const dx = enemy.x - jet.x;
+        const dy = enemy.y - jet.y;
+        const enemyAngle = Math.atan2(dy, dx);
+        const d = state.dist(jet.x, jet.y, enemy.x, enemy.y);
+        if (jet.team === 'red') {
+          desiredAngle = enemyAngle + state.rand(-0.14, 0.14);
+        } else {
+          const fleeAngle = enemyAngle + Math.PI;
+          desiredAngle = fleeAngle + state.rand(-0.55, 0.55);
+          if (d < 120) desiredAngle = fleeAngle + state.rand(-0.9, 0.9);
+        }
+      }
+      if (jet.team === 'red') {
+        const threat = nearestThreatBullet(jet);
+        if (threat) {
+          const dodgeBase = Math.atan2(threat.vy, threat.vx);
+          const cross = Math.sin(dodgeBase - jet.angle);
+          const dodgeAngle = dodgeBase + (cross >= 0 ? -Math.PI / 2 : Math.PI / 2);
+          const threatDistance = state.dist(jet.x, jet.y, threat.x, threat.y);
+          const dodgeWeight = 1 - state.clamp((threatDistance - 35) / 135, 0, 1);
+          desiredAngle = state.lerpAngle(desiredAngle, dodgeAngle, 0.52 + dodgeWeight * 0.28);
+        }
+      }
+      let turnFactor = jet.turnRate;
+      if (jet.sharpTurnTimer <= 0) {
+        turnFactor *= jet.sharpTurnBoost;
+        jet.sharpTurnTimer = state.rand(12, 40);
+        desiredAngle += state.rand(-1.2, 1.2);
+      }
+      jet.angle = state.lerpAngle(jet.angle, desiredAngle, turnFactor * dt);
+      const moveSpeed = jet.team === 'green' && enemy && state.dist(jet.x, jet.y, enemy.x, enemy.y) < 150
+        ? jet.speed * 1.12
+        : jet.speed;
+      const finalMoveSpeed = jet.team === 'green' && jet.boostTimer > 0
+        ? moveSpeed * 1.36
+        : moveSpeed;
+      jet.x += Math.cos(jet.angle) * finalMoveSpeed * dt;
+      jet.y += Math.sin(jet.angle) * finalMoveSpeed * dt;
+      if (jet.x < 30 || jet.x > state.W() - 30) {
+        jet.angle = Math.PI - jet.angle + state.rand(-0.45, 0.45);
+        jet.x = state.clamp(jet.x, 30, state.W() - 30);
+      }
+      if (jet.y < 45 || jet.y > state.H() - 105) {
+        jet.angle = -jet.angle + state.rand(-0.45, 0.45);
+        jet.y = state.clamp(jet.y, 45, state.H() - 105);
+      }
+      jet.cooldown -= 16.6667 * dt;
+      if (enemy && jet.cooldown <= 0) {
+        const aimX = enemy.x + Math.cos(enemy.angle) * 14;
+        const aimY = enemy.y + Math.sin(enemy.angle) * 14;
+        shootBullet(
+          jet.x + Math.cos(jet.angle) * 12,
+          jet.y + Math.sin(jet.angle) * 12,
+          aimX,
+          aimY,
+          jet.team,
+          jet.team === 'green' ? '#8cff98' : '#ff8a8a',
+          jet.team === 'red' ? 3.75 : 3.3,
+          jet.team === 'red' ? 20 : 12
+        );
+        jet.cooldown = jet.team === 'red' ? state.rand(820, 1380) : state.rand(1500, 2400);
+      }
+    }
+
+    for (const b of state.bullets) {
+      b.x += b.vx * dt;
+      b.y += b.vy * dt;
+      b.life -= dt;
+    }
+
+    for (const b of state.bullets) {
+      if (b.life <= 0) continue;
+      if (b.owner === 'player') {
+        for (const jet of state.jets) {
+          if (!jet.alive || jet.team !== 'red') continue;
+          if (state.dist(b.x, b.y, jet.x, jet.y) < jet.size + 4.5) {
+            b.life = 0;
+            const mult = getPlayerDamageMultiplier(jet, b.x, b.y);
+            jet.hp -= b.damage * mult;
+            jet.hitFlash = 3;
+            state.hits += 1;
+            createExplosion(b.x, b.y, '#ffd54a', 8);
+            if (jet.hp <= 0) killJet(jet, true);
+            refreshHud();
+            break;
+          }
+        }
+      } else {
+        for (const jet of state.jets) {
+          if (!jet.alive || jet.team === b.owner) continue;
+          if (state.dist(b.x, b.y, jet.x, jet.y) < jet.size + 4) {
+            b.life = 0;
+            jet.hp -= b.damage;
+            jet.hitFlash = 2.5;
+            createExplosion(b.x, b.y, b.owner === 'red' ? '#ff8a8a' : '#8cff98', 6);
+            if (jet.hp <= 0) killJet(jet, false);
+            refreshHud();
+            break;
+          }
+        }
+      }
+    }
+
+    state.bullets = state.bullets.filter(
+      (b) => b.life > 0 && b.x > -30 && b.x < state.W() + 30 && b.y > -30 && b.y < state.H() + 30
+    );
+
+    for (const p of state.particles) {
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      p.vx *= 0.985;
+      p.vy *= 0.985;
+      p.life -= dt;
+    }
+    state.particles = state.particles.filter((p) => p.life > 0);
+
+    const greenAlive = getLiving('green').length;
+    const redAlive = getLiving('red').length;
+    if (redAlive === 0) {
+      campaign.rounds.push({
+        round: campaign.currentRound,
+        time: state.elapsed,
+        shots: state.shots,
+        result: 'won',
+      });
+      campaign.cleared += 1;
+      campaign.currentRound += 1;
+      state.roundComplete = true;
+      state.nextRoundAt = ts + 1350;
+      refreshHud();
+    } else if (greenAlive === 0) {
+      state.gameOver = true;
+      state.win = false;
+      campaign.rounds.push({
+        round: campaign.currentRound,
+        time: state.elapsed,
+        shots: state.shots,
+        result: 'lost',
+      });
+      refreshHud();
+    } else if (Math.floor(state.elapsed * 10) % 10 === 0) {
+      refreshHud();
+    }
+  }
+
+  if (state.roundComplete && ts >= state.nextRoundAt) {
+    startRound(false);
+    return;
+  }
+
+  for (const jet of state.jets) if (jet.alive) drawJet(jet);
+  for (const b of state.bullets) drawBullet(b);
+  drawParticles();
+  drawPlayerCannon();
+  drawCrosshair();
+  drawOverlay();
+  animationRef = requestAnimationFrame(tick);
+}
+
+canvas.addEventListener('mousemove', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  state.mouse.x = e.clientX - rect.left;
+  state.mouse.y = e.clientY - rect.top;
+});
+canvas.addEventListener('mousedown', (e) => {
+  if (e.button !== 0) return;
+  state.mouse.down = true;
+  firePlayer();
+});
+window.addEventListener('mouseup', () => {
+  if (state) state.mouse.down = false;
+});
+canvas.addEventListener('click', (e) => {
+  if (!state.gameOver) return;
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  const button = state.restartButton;
+  if (button && mx >= button.x && mx <= button.x + button.w && my >= button.y && my <= button.y + button.h) {
+    startGame();
+  }
+});
+window.addEventListener('resize', () => state && state.resize());
+restartBtn.addEventListener('click', startGame);
+startBtn.addEventListener('click', () => {
+  startGame();
+  canvas.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+howBtn.addEventListener('click', () => {
+  const isHidden = howCard.hasAttribute('hidden');
+  if (isHidden) {
+    howCard.removeAttribute('hidden');
+  } else {
+    howCard.setAttribute('hidden', '');
+  }
+  howBtn.setAttribute('aria-expanded', String(isHidden));
+});
+
+resetCampaign();
+state = makeState();
+state.resize();
+updateHud({
+  round: 1,
+  cleared: 0,
+  score: 0,
+  greenAlive: 7,
+  redAlive: 10,
+  shots: 0,
+  hits: 0,
+  elapsed: 0
+});
+drawBackground();
+</script>
+</body>
+</html>

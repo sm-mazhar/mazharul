@@ -1,0 +1,2187 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>S M Mazharul Hoque Chowdhury - HCI and Accessibility Researcher</title>
+<meta name="description" content="S M Mazharul Hoque Chowdhury is a PhD student at the University of North Texas researching HCI, accessibility, and gamification of ADHD treatment, with NLP and ML as supporting areas."/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+<style>
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   TOKENS & RESET
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+:root{
+  --bg0:#07111f;
+  --bg1:#0b1728;
+  --bg2:#122033;
+  --card:#132237;
+  --card2:#18283f;
+  --indigo:#4a6fa5;
+  --violet:#5f6fb2;
+  --blue:#3f7cac;
+  --sky:#63a4c6;
+  --teal:#58b09c;
+  --green:#76b08a;
+  --gold:#d9a441;
+  --rose:#cf7f6d;
+  --purple:#7c82b9;
+  --white:#ffffff;
+  --light:#e8eef5;
+  --muted:#9aa9bb;
+  --border:rgba(255,255,255,.1);
+  --glow-i:rgba(74,111,165,.35);
+  --glow-s:rgba(99,164,198,.28);
+  --grad-main:linear-gradient(135deg,#4a6fa5,#5f6fb2);
+  --grad-sky:linear-gradient(135deg,#63a4c6,#3f7cac);
+  --grad-teal:linear-gradient(135deg,#58b09c,#63a4c6);
+  --grad-full:linear-gradient(135deg,#4a6fa5,#5f6fb2,#63a4c6,#58b09c);
+  --sidebar:270px;
+  --r:14px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg0);color:var(--light);line-height:1.7;overflow-x:hidden}
+a{color:var(--sky);text-decoration:none;transition:color .2s}
+a:hover{color:var(--teal)}
+img{max-width:100%;display:block}
+a:focus-visible,button:focus-visible,[role="button"]:focus-visible{
+  outline:3px solid #f7d06b;outline-offset:3px;border-radius:10px;
+}
+.skip-link{
+  position:fixed;left:16px;top:-48px;z-index:1200;
+  padding:10px 16px;border-radius:12px;
+  background:var(--white);color:var(--bg0);font-weight:700;
+  box-shadow:0 10px 30px rgba(0,0,0,.28);transition:top .2s ease;
+}
+.skip-link:focus{top:14px}
+.sr-only{
+  position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg1)}
+::-webkit-scrollbar-thumb{background:var(--indigo);border-radius:3px}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   SCROLL PROGRESS BAR
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+#scroll-progress{
+  position:fixed;top:0;left:0;height:3px;z-index:1001;
+  background:linear-gradient(to right,#4f46e5,#7c3aed,#0ea5e9,#14b8a6);
+  width:0%;transition:width .08s linear;
+  box-shadow:0 0 12px rgba(79,70,229,.8);
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   SIDEBAR
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+#sidebar{
+  position:fixed;left:0;top:0;width:var(--sidebar);height:100vh;
+  background:rgba(6,9,28,.94);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  z-index:200;overflow-y:auto;
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.sp{padding:32px 20px 22px;text-align:center;border-bottom:1px solid var(--border)}
+.av-wrap{position:relative;width:104px;height:104px;margin:0 auto 14px}
+.av-wrap img{width:100%;height:100%;border-radius:50%;object-fit:cover;position:relative;z-index:1}
+.av-ring{
+  position:absolute;inset:-4px;border-radius:50%;
+  background:conic-gradient(from 0deg,#4f46e5,#7c3aed,#0ea5e9,#14b8a6,#4f46e5);
+  animation:spin-ring 4s linear infinite;z-index:0;
+}
+.av-ring::after{content:'';position:absolute;inset:3px;background:var(--bg1);border-radius:50%}
+@keyframes spin-ring{to{transform:rotate(360deg)}}
+.sp h2{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:800;color:var(--white);line-height:1.3;margin-bottom:5px}
+.sp .role{font-size:.72rem;color:var(--sky);font-weight:600;margin-bottom:3px}
+.sp .uni{font-size:.68rem;color:var(--muted)}
+.status-dot{display:inline-flex;align-items:center;gap:5px;font-size:.68rem;color:var(--green);margin-top:6px;font-weight:800}
+.status-dot::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse-dot 2s ease infinite}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.5)}50%{box-shadow:0 0 0 5px rgba(16,185,129,0)}}
+nav{flex:1;padding:12px 0}
+nav ul{list-style:none}
+nav li a{
+  display:flex;align-items:center;gap:11px;
+  padding:11px 20px;font-size:.82rem;font-weight:500;
+  color:var(--muted);border-left:2px solid transparent;
+  transition:all .2s;
+}
+nav li a i{width:16px;font-size:.85rem;flex-shrink:0}
+nav li a:hover,nav li a.active{color:var(--white);background:rgba(79,70,229,.12);border-left-color:var(--indigo)}
+.nav-cv{
+  margin:4px 14px 8px;padding:9px;border-radius:10px;
+  background:var(--grad-main);text-align:center;
+  font-size:.8rem;font-weight:700;color:var(--white)!important;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  box-shadow:0 4px 18px rgba(79,70,229,.4);
+  border-left:none!important;transition:opacity .2s,transform .2s!important;
+}
+.nav-cv:hover{opacity:.88;transform:translateY(-1px)!important}
+.ss{padding:14px 20px;border-top:1px solid var(--border);display:flex;justify-content:center;gap:14px}
+.ss a{color:var(--muted);font-size:.95rem;transition:color .2s,transform .2s}
+.ss a:hover{color:var(--indigo);transform:translateY(-2px)}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   MAIN
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+#main{margin-left:var(--sidebar);position:relative;z-index:1}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   SECTION BASE
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.sec{min-height:100vh;padding:90px clamp(20px,4vw,60px)}
+.sec#gallery{min-height:auto;padding-bottom:48px}
+.sec-alt{background:rgba(10,14,40,.65);backdrop-filter:blur(6px)}
+.sec-title{font-family:'Syne',sans-serif;font-size:2.1rem;font-weight:800;color:var(--white);margin-bottom:6px}
+.sec-sub{color:var(--muted);font-size:.9rem;margin-bottom:44px;max-width:min(640px,100%)}
+.pill-line{width:48px;height:3px;background:var(--grad-main);border-radius:2px;margin-bottom:10px}
+.gt{background:var(--grad-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gt-sky{background:var(--grad-sky);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gt-teal{background:var(--grad-teal);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   HERO
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+#about{
+  min-height:100vh;display:flex;align-items:center;flex-direction:column;justify-content:center;
+  padding:0;position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at top center,rgba(99,164,198,.12),transparent 32%),
+    linear-gradient(180deg,rgba(11,23,40,.98),rgba(7,17,31,.98));
+}
+#about::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.45;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size:28px 28px;
+}
+/* Animated aurora blobs */
+.aura-blob{
+  position:absolute;pointer-events:none;border-radius:50%;filter:blur(100px);
+  animation:aura-drift ease-in-out infinite;
+}
+.ab1{width:560px;height:560px;background:rgba(74,111,165,.16);top:-140px;right:-120px;animation-duration:18s;animation-delay:0s}
+.ab2{width:420px;height:420px;background:rgba(88,176,156,.12);bottom:-110px;left:4%;animation-duration:22s;animation-delay:-6s}
+.ab3{width:300px;height:300px;background:rgba(217,164,65,.08);top:34%;left:20%;animation-duration:26s;animation-delay:-10s}
+@keyframes aura-drift{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(40px,-30px) scale(1.08)}
+  66%{transform:translate(-30px,40px) scale(.94)}
+}
+/* Floating keyword chips */
+.float-kw{
+  position:absolute;pointer-events:none;white-space:nowrap;
+  background:rgba(99,164,198,.08);border:1px solid rgba(99,164,198,.18);
+  border-radius:100px;padding:5px 14px;font-size:.72rem;color:rgba(232,238,245,.72);font-weight:600;
+  animation:kw-float linear infinite;opacity:0;
+}
+@keyframes kw-float{
+  0%{transform:translateY(60px);opacity:0}
+  10%{opacity:1}
+  85%{opacity:.7}
+  100%{transform:translateY(-100px);opacity:0}
+}
+.hero-inner{
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:clamp(28px,4vw,56px);
+  justify-content:center;align-items:center;width:100%;max-width:1320px;
+  padding:clamp(80px,9vw,102px) clamp(20px,4vw,56px) 36px;position:relative;z-index:2;
+}
+.hero-card{
+  width:100%;max-width:720px;background:transparent;border:none;border-radius:0;padding:0;
+  backdrop-filter:none;box-shadow:none;position:relative;overflow:visible;
+}
+.h-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(88,176,156,.12);border:1px solid rgba(88,176,156,.26);
+  border-radius:100px;padding:5px 14px;font-size:.72rem;
+  color:#bde5d4;font-weight:700;letter-spacing:.04em;margin-bottom:16px;
+}
+.h-badge-dot{width:6px;height:6px;background:#bde5d4;border-radius:50%;animation:pulse-dot 2s infinite}
+h1.h-name{font-family:'Sora',sans-serif;font-size:3.9rem;font-weight:800;line-height:.94;letter-spacing:-.05em;color:var(--white);margin-bottom:10px;max-width:760px}
+.h-type{font-size:1.08rem;color:var(--sky);font-weight:700;margin-bottom:16px;min-height:28px}
+.cursor{display:inline-block;width:2px;height:1.1em;background:var(--sky);animation:blink .8s step-end infinite;vertical-align:text-bottom;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.h-text{width:100%;text-align:left;position:relative;z-index:1}
+.h-lead{
+  font-size:1.35rem;font-weight:800;color:var(--sky);
+  margin-bottom:22px;letter-spacing:.01em;max-width:620px;
+}
+.hero-subline{
+  display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:0 0 18px;
+  color:var(--muted);font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+}
+.hero-subline span{display:inline-flex;align-items:center;gap:8px}
+.hero-subline span::before{
+  content:'';width:7px;height:7px;border-radius:50%;background:rgba(99,164,198,.55);
+}
+.h-bio{color:var(--light);font-size:1rem;line-height:1.95;margin:0 0 26px;max-width:690px}
+.h-tags{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 28px;justify-content:flex-start}
+.h-tag{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  color:var(--light);padding:6px 14px;border-radius:100px;font-size:.74rem;font-weight:600;
+  transition:all .2s;cursor:default;
+}
+.h-tag.primary{background:rgba(88,176,156,.14);border-color:rgba(88,176,156,.3);color:#d8f0e7}
+.h-tag:hover{background:rgba(99,164,198,.14);border-color:rgba(99,164,198,.28);transform:translateY(-1px)}
+.h-btns{display:flex;gap:12px;flex-wrap:nowrap;justify-content:flex-start;align-items:center}
+.btn-g{
+  background:var(--grad-main);color:var(--white);
+  padding:10px 22px;border-radius:10px;font-size:.84rem;font-weight:700;
+  width:220px;display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;
+  box-shadow:0 8px 28px rgba(74,111,165,.28);
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-g:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(74,111,165,.32);color:var(--white)}
+.btn-o{
+  border:1.5px solid rgba(255,255,255,.12);color:var(--light);
+  padding:10px 22px;border-radius:10px;font-size:.84rem;font-weight:700;
+  width:220px;display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;
+  transition:all .2s;backdrop-filter:blur(6px);
+}
+.btn-o:hover{border-color:var(--sky);background:rgba(99,164,198,.12);color:var(--white);transform:translateY(-2px)}
+/* Photo */
+.h-photo-wrap{
+  position:relative;z-index:2;display:grid;align-content:center;justify-items:center;
+  gap:16px;padding:0 0 22px;background:transparent;border:none;border-radius:0;backdrop-filter:none;
+  box-shadow:none;overflow:visible;
+}
+.h-photo-frame{width:100%;max-width:360px;aspect-ratio:1/1.08;position:relative;border-radius:30px;justify-self:center;overflow:visible;isolation:isolate}
+.h-photo-image{
+  position:relative;z-index:1;width:100%;border-radius:30px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);
+  box-shadow:0 24px 80px rgba(0,0,0,.28);
+}
+.h-photo-image img{width:100%;height:100%;display:block;object-fit:cover;object-position:center top;aspect-ratio:1/1.05}
+.h-photo-orbit{
+  position:absolute;inset:-16px;z-index:5;pointer-events:none;
+}
+.h-photo-orbit::before{
+  content:'';position:absolute;inset:0;border-radius:38px;
+  border:1.5px solid rgba(99,164,198,.28);
+  box-shadow:0 0 26px rgba(77,124,255,.16);
+}
+.h-orbit-fighter{
+  position:absolute;left:0;top:0;z-index:6;
+  width:34px;height:34px;
+  display:flex;align-items:center;justify-content:center;
+  transform:translate(-50%,-50%);
+  will-change:transform,left,top;
+}
+.h-orbit-fighter svg{
+  width:100%;height:100%;display:block;
+  filter:drop-shadow(0 0 8px rgba(73,198,255,.46)) drop-shadow(0 0 14px rgba(131,95,255,.28));
+}
+.h-photo-caption{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
+  font-size:.82rem;color:var(--light);text-align:center;padding-top:18px;
+  position:relative;z-index:2;
+}
+.h-photo-caption span{color:var(--muted)}
+#about{position:relative;overflow:hidden}
+#hero-fx{
+  position:absolute;inset:0;pointer-events:none;z-index:1;
+  width:100%;height:100%;
+}
+.hero-bottom{
+  width:100%;max-width:1320px;padding:0 clamp(20px,4vw,56px) 86px;position:relative;z-index:2;
+}
+.hero-stats{
+  display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:16px;
+  width:100%;max-width:740px;margin-left:auto;
+}
+.hero-stat-card{
+  min-height:108px;padding:20px 18px;border-radius:22px;
+  background:rgba(22,29,56,.78);border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(14px);display:flex;flex-direction:column;justify-content:space-between;
+}
+.hero-stat-value{
+  font-family:'Syne',sans-serif;font-size:2.45rem;line-height:.9;margin-bottom:10px;
+}
+.hero-stat-card:nth-child(1) .hero-stat-value{color:#8c63ff}
+.hero-stat-card:nth-child(2) .hero-stat-value{color:#22b8ff}
+.hero-stat-card:nth-child(3) .hero-stat-value{color:#25d3c7}
+.hero-stat-card:nth-child(4) .hero-stat-value{color:#7b54ff}
+.hero-stat-label{
+  font-size:.8rem;line-height:1.55;color:var(--muted);font-weight:600;
+}
+@media(max-width:1280px){
+  .hero-inner{grid-template-columns:minmax(0,1fr) 320px;gap:34px;padding:88px 36px 28px;max-width:1120px}
+  h1.h-name{font-size:4.2rem;max-width:620px}
+  .hero-card{max-width:620px}
+  .h-photo-frame{max-width:320px}
+  .hero-bottom{padding:0 36px 72px}
+  .hero-stats{max-width:620px;grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@keyframes float-a{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes float-b{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
+
+/* Stats strip */
+.stats-strip{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;
+  padding:0 60px 80px;position:relative;z-index:2;width:100%;
+}
+.s-box{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:24px;text-align:center;
+  transition:border-color .25s,transform .25s,box-shadow .25s;
+  cursor:default;position:relative;overflow:hidden;
+}
+.s-box::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(79,70,229,.08),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.s-box:hover::before{opacity:1}
+.s-box:hover{transform:translateY(-5px);border-color:rgba(79,70,229,.4);box-shadow:0 16px 40px rgba(79,70,229,.2)}
+.s-num{font-family:'Syne',sans-serif;font-size:2.1rem;font-weight:800;line-height:1}
+.s-lbl{font-size:.74rem;color:var(--muted);margin-top:5px}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   CURRENT RESEARCH â€” ADHD PROJECT
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.cr-hero{
+  background:linear-gradient(135deg,rgba(74,111,165,.14),rgba(88,176,156,.08));
+  border:1px solid rgba(99,164,198,.18);
+  border-radius:20px;padding:42px 46px;margin-bottom:48px;
+  position:relative;overflow:hidden;
+}
+.cr-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 700px 350px at 85% 50%,rgba(79,70,229,.1),transparent 70%);
+  pointer-events:none;
+}
+.cr-hero-inner{position:relative;z-index:1}
+.cr-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(99,164,198,.14);border:1px solid rgba(99,164,198,.28);
+  border-radius:100px;padding:5px 14px;font-size:.72rem;
+  color:#d6e8f2;font-weight:700;letter-spacing:.04em;margin-bottom:16px;
+}
+.cr-badge i{color:var(--sky);animation:pulse-dot 2.5s infinite}
+.cr-title{font-family:'Syne',sans-serif;font-size:1.65rem;font-weight:800;color:var(--white);margin-bottom:12px;line-height:1.25}
+.cr-desc{color:var(--light);font-size:.92rem;line-height:1.9;max-width:780px;margin-bottom:12px}
+.cr-support{
+  display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;
+}
+.cr-support span{
+  padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);font-size:.76rem;color:var(--light);font-weight:600;
+}
+
+/* Animated pipeline canvas */
+#adhd-pipeline{
+  width:100%;height:160px;border-radius:16px;
+  background:rgba(4,6,26,.6);border:1px solid rgba(79,70,229,.2);
+  display:block;margin:28px 0;
+}
+
+.cr-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.cr-pillar{
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  border-radius:14px;padding:20px 22px;
+  transition:border-color .25s,background .25s,transform .25s,box-shadow .25s;
+  position:relative;overflow:hidden;
+}
+.cr-pillar::after{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:80px;height:80px;border-radius:50%;
+  background:rgba(79,70,229,.08);filter:blur(20px);
+  transition:opacity .3s;opacity:0;
+}
+.cr-pillar:hover::after{opacity:1}
+.cr-pillar:hover{border-color:rgba(79,70,229,.45);background:rgba(79,70,229,.07);transform:translateY(-4px);box-shadow:0 12px 30px rgba(79,70,229,.15)}
+.cr-pillar-icon{font-size:1.5rem;margin-bottom:10px}
+.cr-pillar h4{font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:5px}
+.cr-pillar p{font-size:.77rem;color:var(--muted);line-height:1.65}
+
+/* Research interest tags */
+.ri-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:12px}
+.ri-item{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  border-radius:10px;padding:10px 14px;
+  transition:all .2s;
+}
+.ri-item:hover{border-color:rgba(79,70,229,.3);background:rgba(79,70,229,.06);transform:translateX(3px)}
+.ri-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ri-lbl{font-size:.78rem;font-weight:600;color:var(--light)}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   CARDS & SHARED
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:26px;
+  transition:border-color .25s,transform .25s,box-shadow .25s;
+}
+.card:hover{transform:translateY(-4px);border-color:rgba(79,70,229,.35);box-shadow:0 12px 36px rgba(79,70,229,.15)}
+.ci{
+  width:42px;height:42px;border-radius:11px;
+  background:rgba(79,70,229,.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;color:#a5b4fc;margin-bottom:14px;flex-shrink:0;
+}
+.ci.sky{background:rgba(14,165,233,.15);color:var(--sky)}
+.ci.teal{background:rgba(20,184,166,.15);color:var(--teal)}
+.ci.gold{background:rgba(245,158,11,.15);color:var(--gold)}
+.ci.green{background:rgba(16,185,129,.15);color:var(--green)}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   TIMELINE
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.tl{position:relative;padding-left:44px}
+.tl::before{content:'';position:absolute;left:14px;top:4px;bottom:0;width:1.5px;background:linear-gradient(to bottom,var(--indigo),transparent)}
+.tl-item{position:relative;margin-bottom:34px}
+.tl-dot{
+  position:absolute;left:-44px;top:2px;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--grad-main);border:3px solid var(--bg0);
+  box-shadow:0 0 0 3px rgba(79,70,229,.3),0 0 12px rgba(79,70,229,.25);
+}
+.tl-date{font-size:.7rem;color:var(--sky);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+.tl-title{font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:2px}
+.tl-place{font-size:.78rem;color:var(--muted);margin-bottom:5px}
+.tl-desc{font-size:.8rem;color:#94a3b8;line-height:1.7}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   SKILL BARS
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.skill-list{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.skill-item{display:flex;flex-direction:column;gap:4px}
+.skill-header{display:flex;justify-content:space-between;align-items:center}
+.skill-name{font-size:.78rem;font-weight:600;color:var(--light)}
+.skill-pct{font-size:.72rem;color:var(--muted);font-weight:700}
+.skill-track{height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden}
+.skill-bar{height:100%;border-radius:3px;width:0;transition:width 1.2s cubic-bezier(.25,.46,.45,.94)}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   TAGS
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.tag{padding:4px 13px;border-radius:100px;font-size:.74rem;font-weight:500;border:1px solid;transition:all .2s;cursor:default}
+.tag-i{background:rgba(79,70,229,.1);border-color:rgba(79,70,229,.25);color:#a5b4fc}
+.tag-i:hover{background:rgba(79,70,229,.2);transform:translateY(-1px)}
+.tag-s{background:rgba(14,165,233,.1);border-color:rgba(14,165,233,.2);color:var(--sky)}
+.tag-s:hover{background:rgba(14,165,233,.2);transform:translateY(-1px)}
+.tag-t{background:rgba(20,184,166,.1);border-color:rgba(20,184,166,.2);color:var(--teal)}
+.tag-t:hover{background:rgba(20,184,166,.2);transform:translateY(-1px)}
+.tag-g{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.2);color:var(--gold)}
+.tag-g:hover{background:rgba(245,158,11,.2);transform:translateY(-1px)}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   PUBLICATIONS
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.pub-filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:32px}
+.pf{
+  background:transparent;border:1.5px solid var(--border);
+  color:var(--muted);padding:7px 16px;border-radius:100px;
+  font-size:.78rem;font-weight:600;cursor:pointer;
+  transition:all .2s;font-family:'Inter',sans-serif;
+}
+.pf:hover,.pf.active{background:var(--indigo);border-color:var(--indigo);color:var(--white);box-shadow:0 4px 14px rgba(79,70,229,.4)}
+.pub-list{display:flex;flex-direction:column;gap:16px}
+.pub-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:22px 26px;
+  transition:all .25s;cursor:pointer;position:relative;overflow:hidden;
+}
+.pub-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--grad-main);opacity:0;transition:opacity .25s;
+}
+.pub-card::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 60% at 0% 50%,rgba(79,70,229,.05),transparent);
+  opacity:0;transition:opacity .25s;
+}
+.pub-card:hover{border-color:rgba(79,70,229,.3);transform:translateX(6px);box-shadow:-6px 0 28px rgba(79,70,229,.15)}
+.pub-card:hover::before{opacity:1}
+.pub-card:hover::after{opacity:1}
+.pub-card.hidden{display:none}
+.pub-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px}
+.pub-meta{display:flex;gap:8px;align-items:center;flex-shrink:0;flex-wrap:wrap}
+.pub-type{padding:2px 10px;border-radius:100px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.pt-conf{background:rgba(14,165,233,.15);color:var(--sky);border:1px solid rgba(14,165,233,.25)}
+.pt-book{background:rgba(245,158,11,.15);color:var(--gold);border:1px solid rgba(245,158,11,.25)}
+.pub-year{font-size:.72rem;font-weight:800;color:var(--indigo);background:rgba(79,70,229,.12);border:1px solid rgba(79,70,229,.2);padding:2px 9px;border-radius:6px}
+.pub-cite{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:.7rem;font-weight:700;color:var(--gold);
+  background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);
+  padding:2px 9px;border-radius:6px;
+}
+.pub-title{font-size:.93rem;font-weight:700;color:var(--white);line-height:1.4;margin-bottom:5px;position:relative;z-index:1}
+.pub-authors{font-size:.78rem;color:var(--muted);margin-bottom:4px;position:relative;z-index:1}
+.pub-authors strong{color:var(--teal);font-weight:600}
+.pub-venue{font-size:.76rem;color:#6366f1;font-style:italic;margin-bottom:10px;position:relative;z-index:1}
+.pub-actions{display:flex;gap:8px;position:relative;z-index:1}
+.pub-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.74rem;font-weight:600;padding:4px 13px;border-radius:8px;
+  background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.2);
+  color:var(--sky);transition:all .2s;
+}
+.pub-btn:hover{background:rgba(37,99,235,.22);color:var(--sky)}
+/* Citation impact bar */
+.cite-impact{margin-top:10px;position:relative;z-index:1}
+.cite-bar-wrap{height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+.cite-bar{height:100%;border-radius:2px;width:0;transition:width 1.4s cubic-bezier(.25,.46,.45,.94)}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   RESEARCH CARDS
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.rc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.rc{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;transition:all .3s;cursor:pointer;
+}
+.rc:hover,.rc:focus-visible{transform:translateY(-7px);border-color:rgba(79,70,229,.4);box-shadow:0 20px 50px rgba(79,70,229,.22)}
+.rc-img{height:155px;overflow:hidden;position:relative}
+.rc-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.rc:hover .rc-img img,.rc.is-open .rc-img img{transform:scale(1.09)}
+.rc-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(16,21,48,.8),transparent 50%);
+}
+.rc-lbl{
+  position:absolute;top:10px;right:10px;z-index:2;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  padding:3px 10px;border-radius:100px;font-size:.66rem;
+  color:var(--sky);font-weight:700;
+}
+.rc-body{padding:18px 20px}
+.rc-body h4{font-size:.88rem;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.35}
+.rc-body p{font-size:.78rem;color:var(--muted);line-height:1.65}
+.rc-summary{margin-bottom:0}
+.rc-toggle{
+  margin-top:14px;display:inline-flex;align-items:center;gap:8px;
+  font-size:.72rem;font-weight:700;color:var(--sky);text-transform:uppercase;letter-spacing:.06em;
+}
+.rc-toggle i{transition:transform .25s ease}
+.rc-details{
+  max-height:0;overflow:hidden;opacity:0;
+  transition:max-height .35s ease,opacity .25s ease,margin-top .25s ease;
+  margin-top:0;
+}
+.rc.is-open .rc-details{
+  max-height:420px;opacity:1;margin-top:14px;
+}
+.rc.is-open .rc-toggle i{transform:rotate(180deg)}
+.rc-detail-list{
+  display:grid;gap:8px;padding-top:2px;
+}
+.rc-detail-list span{
+  font-size:.76rem;line-height:1.65;color:var(--light);
+  padding-left:14px;position:relative;
+}
+.rc-detail-list span::before{
+  content:'';position:absolute;left:0;top:.68em;width:6px;height:6px;border-radius:50%;
+  background:rgba(99,164,198,.75);
+}
+.rc-links{
+  display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;
+}
+.rc-link-card{
+  flex:1 1 220px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);
+  border-radius:14px;
+  padding:12px 12px 13px;
+}
+.rc-link-title{
+  font-size:.74rem;font-weight:700;line-height:1.5;color:var(--white);margin-bottom:10px;
+}
+.rc-link-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 12px;border-radius:10px;
+  border:1px solid rgba(99,164,198,.24);
+  background:rgba(37,99,235,.12);color:var(--sky);
+  font-size:.74rem;font-weight:700;text-decoration:none;
+  transition:background .2s,border-color .2s,transform .2s,color .2s;
+}
+.rc-link-btn:hover{
+  background:rgba(37,99,235,.22);border-color:rgba(99,164,198,.42);color:var(--white);transform:translateY(-1px);
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   TEACHING
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.teach-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;font-size:.72rem;font-weight:700;margin-bottom:10px}
+.tb-green{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);color:var(--green)}
+.tb-gold{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);color:var(--gold)}
+.tb-muted{background:rgba(100,116,139,.12);border:1px solid rgba(100,116,139,.25);color:var(--muted)}
+.course-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.course-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;transition:border-color .2s,transform .2s}
+.course-card:hover{border-color:rgba(79,70,229,.3);transform:translateY(-3px)}
+.course-card .ci{width:36px;height:36px;font-size:.85rem;margin-bottom:10px}
+.course-card h4{font-size:.83rem;font-weight:700;color:var(--white);margin-bottom:3px}
+.course-card p{font-size:.74rem;color:var(--muted);line-height:1.6}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   GALLERY
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.gal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.gal-item{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;border:1px solid transparent}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.gal-item:hover img,.gal-item:focus-visible img{transform:scale(1.04)}
+.gal-ov{position:absolute;inset:0;background:rgba(5,7,26,.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
+.gal-item:hover .gal-ov,.gal-item:focus-visible .gal-ov{opacity:1}
+.gal-ov i{font-size:1.8rem;color:var(--white)}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   CONTACT
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px}
+.ci-row{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 20px;background:var(--card);
+  border:1px solid var(--border);border-radius:12px;margin-bottom:12px;
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+}
+.ci-row:hover{border-color:rgba(79,70,229,.35);transform:translateX(4px);box-shadow:4px 0 16px rgba(79,70,229,.1)}
+.ci-icon{width:40px;height:40px;border-radius:10px;background:var(--grad-main);display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--white);flex-shrink:0}
+.ci-lbl{font-size:.7rem;color:var(--muted);margin-bottom:1px}
+.ci-val{font-size:.84rem;font-weight:600;color:var(--white)}
+.ci-val a{color:var(--white)}
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin-bottom:16px}
+.contact-card h3{font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:12px}
+.contact-card p{font-size:.85rem;color:var(--muted);line-height:1.8}
+
+/* Layout helpers */
+.two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px}
+.three-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.award-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;display:flex;gap:14px;align-items:flex-start;transition:border-color .25s,transform .25s,box-shadow .25s}
+.award-card:hover{border-color:rgba(245,158,11,.35);transform:translateY(-3px);box-shadow:0 10px 28px rgba(245,158,11,.1)}
+.aw-icon{font-size:1.5rem;flex-shrink:0}
+.aw-year{font-size:.7rem;color:var(--gold);font-weight:700;margin-bottom:2px}
+.aw-title{font-size:.88rem;font-weight:700;color:var(--white);margin-bottom:3px}
+.aw-desc{font-size:.76rem;color:var(--muted);line-height:1.6}
+.section-divider{display:flex;align-items:center;gap:12px;margin:44px 0 28px}
+.section-divider span{font-size:.78rem;font-weight:700;color:var(--sky);text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   MOBILE TOGGLE
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+#mob-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:300;
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  width:38px;height:38px;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--white);font-size:1rem;backdrop-filter:blur(12px);
+}
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:190;backdrop-filter:blur(2px)}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  #neural-canvas,#adhd-pipeline,#float-kw-container,#hero-fx{display:none}
+  .h-orbit-fighter{display:none}
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   RESPONSIVE
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+@media(max-width:1050px){
+  .hero-inner{grid-template-columns:1fr;max-width:980px;gap:28px}
+  h1.h-name{font-size:3.1rem}
+  .hero-card{max-width:none}
+  .hero-split{grid-template-columns:1fr}
+  .h-photo-wrap{max-width:520px;justify-self:center;width:100%}
+  .h-photo-frame{max-width:280px}
+  .hero-bottom{padding:0 28px 64px}
+  .hero-stats{max-width:none;grid-template-columns:1fr 1fr}
+  .cr-pillars{grid-template-columns:1fr 1fr}
+  .contact-grid{gap:24px}
+}
+@media(max-width:820px){
+  .sec{padding:56px 24px}
+  .two-col,.contact-grid{grid-template-columns:1fr}
+  .three-col,.rc-grid,.course-grid,.gal-grid{grid-template-columns:1fr 1fr}
+  .contact-card{padding:22px}
+}
+@media(max-width:900px){
+  :root{--sidebar:0px}
+  #sidebar{transform:translateX(-270px);width:270px}
+  #sidebar.open{transform:translateX(0)}
+  .mob-overlay.open{display:block}
+  #mob-btn{display:flex}
+  #main{margin-left:0}
+  .hero-inner{padding:80px 28px 40px}
+  .hero-inner{gap:26px;padding:80px 28px 24px}
+  h1.h-name{font-size:2.5rem}
+  .h-photo-frame{max-width:240px}
+  .hero-bottom{padding:0 28px 54px}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .stats-strip{display:none}
+  .sec{padding:64px 28px}
+  .two-col,.contact-grid{grid-template-columns:1fr}
+  .three-col,.rc-grid,.course-grid,.gal-grid{grid-template-columns:1fr 1fr}
+  .cr-pillars{grid-template-columns:1fr}
+  #adhd-pipeline{height:120px}
+}
+@media(max-width:600px){
+  h1.h-name{font-size:2rem}
+  .h-lead{font-size:1.04rem}
+  .h-bio{font-size:.92rem}
+  .h-btns{flex-wrap:wrap}
+  .h-photo-frame{max-width:220px}
+  .hero-stats{grid-template-columns:1fr}
+  .hero-bottom{padding:0 20px 46px}
+  .sec-title{font-size:1.65rem}
+  .stats-strip{grid-template-columns:1fr}
+  .three-col,.rc-grid,.course-grid,.gal-grid{grid-template-columns:1fr}
+  .cr-hero{padding:24px 22px}
+  .ri-grid{grid-template-columns:1fr}
+  .ci-row{padding:14px 16px;gap:12px}
+  .ci-icon{width:36px;height:36px}
+  .ci-val{font-size:.8rem;word-break:break-word}
+  .contact-card{padding:18px}
+  .section-divider{margin:32px 0 22px}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- Scroll progress -->
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<!-- Mobile btn -->
+<button id="mob-btn" type="button" aria-label="Open navigation menu" aria-controls="sidebar" aria-expanded="false" onclick="toggleSidebar()"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+<div class="mob-overlay" id="mob-overlay" onclick="toggleSidebar()" aria-hidden="true"></div>
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     SIDEBAR
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<aside id="sidebar" aria-label="Primary">
+  <div class="sp">
+    <div class="av-wrap">
+      <div class="av-ring"></div>
+      <img src="img/profile/profile_photo.JPG" alt="Portrait of S M Mazharul Hoque Chowdhury"/>
+    </div>
+    <h2>S M Mazharul Hoque Chowdhury</h2>
+    <p class="role">HCI and Accessibility Researcher</p>
+    <p class="uni">University of North Texas, Denton, TX, USA</p>
+    <div class="status-dot">Open to Opportunities</div>
+  </div>
+  <nav aria-label="Section navigation">
+    <ul id="nav-list">
+      <li><a href="#about" class="active"><i class="fa-solid fa-house"></i>About Me</a></li>
+      <li><a href="#current-research"><i class="fa-solid fa-flask-vial"></i>Current Research</a></li>
+      <li><a href="#publications"><i class="fa-solid fa-book-open"></i>Publications</a></li>
+      <li><a href="#research"><i class="fa-solid fa-microscope"></i>Research Projects</a></li>
+      <li><a href="#experience"><i class="fa-solid fa-briefcase"></i>Experience</a></li>
+      <li><a href="#teaching"><i class="fa-solid fa-chalkboard-user"></i>Teaching</a></li>
+      <li><a href="#gallery"><i class="fa-solid fa-images"></i>Gallery</a></li>
+      <li><a href="#contact"><i class="fa-solid fa-envelope"></i>Contact</a></li>
+      <li><a href="./file/CV-Chowdhury.pdf" class="nav-cv" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-download"></i>Download CV</a></li>
+    </ul>
+  </nav>
+  <div class="ss">
+    <a href="https://web.facebook.com/mazharul49/" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook profile"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+    <a href="https://www.linkedin.com/in/s-m-mazharul-hoque-chowdhury-989026112" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn profile"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+    <a href="https://github.com/mazharul2213" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub profile"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
+    <a href="https://scholar.google.com/citations?user=HmABBvgAAAAJ&hl=en&authuser=1" target="_blank" rel="noopener noreferrer" title="Google Scholar" aria-label="Google Scholar profile"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></a>
+  </div>
+</aside>
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     MAIN
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<main id="main">
+
+<!-- â”€â”€ ABOUT / HERO â”€â”€ -->
+<section id="about" aria-labelledby="hero-name">
+  <div class="aura-blob ab1"></div>
+  <div class="aura-blob ab2"></div>
+  <div class="aura-blob ab3"></div>
+  <!-- Floating research keywords injected by JS -->
+  <div id="float-kw-container" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1" aria-hidden="true"></div>
+  <canvas id="hero-fx" aria-hidden="true"></canvas>
+
+  <div class="hero-inner">
+    <div class="hero-card">
+      <div class="h-text">
+        <h1 class="h-name" id="hero-name">S M <span class="gt">Mazharul Hoque</span><br>Chowdhury</h1>
+        <div class="h-lead">HCI and Accessibility Researcher</div>
+        <p class="h-type" id="typewriter" aria-live="polite"><span id="type-text"></span><span class="cursor" aria-hidden="true"></span></p>
+        <div class="hero-subline" aria-label="Professional summary">
+          <span>PhD Student</span>
+          <span>University of North Texas</span>
+          <span>Denton, TX, USA</span>
+        </div>
+        <p class="h-bio">
+          I am a PhD student at the <strong style="color:var(--white)">University of North Texas</strong>, working with Dr. Stephanie Ludi on human-centered computing, accessibility, and adaptive digital health. My research explores how thoughtful HCI design can make the <strong style="color:var(--white)">gamification of ADHD treatment</strong> more engaging, inclusive, and clinically meaningful, while NLP and machine learning support personalization, feedback, and smarter therapeutic interaction.
+        </p>
+        <div class="h-tags" aria-label="Primary and secondary research keywords">
+          <span class="h-tag primary">HCI</span>
+          <span class="h-tag primary">Accessibility Research</span>
+          <span class="h-tag primary">Gamification of ADHD Treatment</span>
+          <span class="h-tag">NLP</span>
+          <span class="h-tag">Machine Learning</span>
+          <span class="h-tag">Digital Health</span>
+          <span class="h-tag">Adaptive Systems</span>
+          <span class="h-tag">Ethical AI</span>
+          <span class="h-tag">LLMs</span>
+          <span class="h-tag">Behavioral Modeling</span>
+          <span class="h-tag">Biomedical NLP</span>
+          <span class="h-tag">Inclusive Interfaces</span>
+        </div>
+        <div class="h-btns">
+          <a href="#current-research" class="btn-g"><i class="fa-solid fa-flask-vial" aria-hidden="true"></i>Current Research</a>
+          <a href="./sky-defense.html" class="btn-g" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-jet-fighter-up" aria-hidden="true"></i>Launch Sky Defense</a>
+          <a href="#publications" class="btn-o"><i class="fa-solid fa-book-open" aria-hidden="true"></i>Publications</a>
+          <a href="#contact" class="btn-o"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i>Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="h-photo-wrap">
+      <div class="h-photo-frame">
+        <div class="h-photo-image">
+          <img src="img/profile/profile_photo.JPG" alt="Portrait of S M Mazharul Hoque Chowdhury"/>
+        </div>
+        <div class="h-photo-orbit" aria-hidden="true">
+          <span class="h-orbit-fighter" aria-hidden="true">
+            <svg viewBox="0 0 64 64" role="presentation" focusable="false" aria-hidden="true">
+              <defs>
+                <linearGradient id="fighter-jet-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#7de5ff"/>
+                  <stop offset="55%" stop-color="#4cb6ff"/>
+                  <stop offset="100%" stop-color="#8b6bff"/>
+                </linearGradient>
+              </defs>
+              <path fill="url(#fighter-jet-fill)" d="M32 4l7 14 13 5-10 6 2 13-7-4-5 22-5-22-7 4 2-13-10-6 13-5 7-14z"/>
+              <path fill="#dff6ff" opacity=".9" d="M32 9l3 8-3 4-3-4 3-8zm0 19l7 4-5 3-2 12-2-12-5-3 7-4z"/>
+              <path fill="#ffffff" opacity=".6" d="M24 22l8 2 8-2-8 7-8-7z"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+      <p class="h-photo-caption"><strong>PhD Student</strong><span>·</span>University of North Texas, Denton, TX, USA</p>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-stats" aria-label="Academic metrics">
+      <div class="hero-stat-card">
+        <div class="hero-stat-value" data-count="15" data-suffix="+">15+</div>
+        <div class="hero-stat-label">Published Papers</div>
+      </div>
+      <div class="hero-stat-card">
+        <div class="hero-stat-value" data-count="140" data-suffix="+">140+</div>
+        <div class="hero-stat-label">Total Citations</div>
+      </div>
+      <div class="hero-stat-card">
+        <div class="hero-stat-value" data-count="6" data-suffix="+">6+</div>
+        <div class="hero-stat-label">Years of Research</div>
+      </div>
+      <div class="hero-stat-card">
+        <div class="hero-stat-value" data-count="3" data-suffix="">3</div>
+        <div class="hero-stat-label">Academic Degrees</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- â”€â”€ CURRENT RESEARCH â”€â”€ -->
+<section id="current-research" class="sec sec-alt">
+  <div class="pill-line" data-aos="fade-right"></div>
+  <h2 class="sec-title" data-aos="fade-up">Current Research &amp; Project Focus</h2>
+  <p class="sec-sub" data-aos="fade-up" data-aos-delay="60">Doctoral research at the University of North Texas focused first on HCI and accessibility, with gamification of ADHD treatment as the primary research theme and NLP or ML as enabling components.</p>
+
+  <div class="cr-hero" data-aos="fade-up" data-aos-delay="80">
+    <div class="cr-hero-inner">
+      <div class="cr-badge"><i class="fa-solid fa-brain" aria-hidden="true"></i>Active PhD Research · University of North Texas</div>
+      <h2 class="cr-title">Gamification of ADHD Treatment<br><span class="gt">An accessibility-centered HCI research direction supported by adaptive NLP and ML</span></h2>
+      <p class="cr-desc">
+        I am developing a research-driven framework for <strong style="color:var(--white)">gamified ADHD treatment</strong> that prioritizes accessible interaction, cognitive support, and meaningful user engagement. The work investigates how HCI methods and accessibility principles can shape a game-like therapeutic experience, while NLP and machine learning help personalize feedback, pacing, and adaptation in a careful, human-centered way.
+      </p>
+      <div class="cr-support" aria-label="Supporting research areas">
+        <span>Secondary area: NLP</span>
+        <span>Secondary area: Machine Learning</span>
+        <span>Supporting area: Digital Health</span>
+        <span>Supporting area: Ethical AI</span>
+      </div>
+
+      <!-- Live animated pipeline -->
+      <canvas id="adhd-pipeline" aria-hidden="true"></canvas>
+
+      <div class="cr-pillars" data-aos="fade-up" data-aos-delay="140">
+        <div class="cr-pillar">
+          <div class="cr-pillar-icon"><i class="fa-solid fa-gamepad" aria-hidden="true"></i></div>
+          <h4>Accessible Game Mechanics</h4>
+          <p>Interaction patterns are designed to be supportive, motivating, and cognitively manageable for people with ADHD.</p>
+        </div>
+        <div class="cr-pillar">
+          <div class="cr-pillar-icon"><i class="fa-solid fa-comments" aria-hidden="true"></i></div>
+          <h4>NLP Support Layer</h4>
+          <p>NLP helps personalize prompts, responses, and communication features so the experience can adapt to users more naturally.</p>
+        </div>
+        <div class="cr-pillar">
+          <div class="cr-pillar-icon"><i class="fa-solid fa-universal-access" aria-hidden="true"></i></div>
+          <h4>Accessibility-First HCI</h4>
+          <p>The core research contribution is an inclusive interface strategy built around attention, comprehension, and reduced cognitive overload.</p>
+        </div>
+        <div class="cr-pillar">
+          <div class="cr-pillar-icon"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i></div>
+          <h4>Ethical &amp; Fair AI</h4>
+          <p>Developed with strong emphasis on Fairness, Bias Mitigation, and Privacy, ensuring equitable treatment for all users regardless of background.</p>
+        </div>
+        <div class="cr-pillar">
+          <div class="cr-pillar-icon"><i class="fa-solid fa-wave-square" aria-hidden="true"></i></div>
+          <h4>Multimodal Fusion</h4>
+          <p>Behavioral and interaction signals can inform adaptation without making the interface feel overwhelming or overly complex.</p>
+        </div>
+        <div class="cr-pillar">
+          <div class="cr-pillar-icon"><i class="fa-solid fa-bullseye" aria-hidden="true"></i></div>
+          <h4>Personalized Outcomes</h4>
+          <p>Systematic application of research tenacity to address complex, open-ended problems in adaptive systems and digital health innovation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Research interests grid -->
+  <div class="card" data-aos="fade-up">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+      <div class="ci"><i class="fa-solid fa-crosshairs"></i></div>
+      <h4 style="font-size:1rem;font-weight:700;color:var(--white)">All Research Interests</h4>
+    </div>
+    <div class="ri-grid">
+      <div class="ri-item"><div class="ri-dot" style="background:#4f46e5"></div><span class="ri-lbl">Accessibility &amp; HCI</span></div>
+      <div class="ri-item"><div class="ri-dot" style="background:#7c3aed"></div><span class="ri-lbl">Adaptive ML Systems</span></div>
+      <div class="ri-item"><div class="ri-dot" style="background:#f59e0b"></div><span class="ri-lbl">Gamified Interventions</span></div>
+      <div class="ri-item"><div class="ri-dot" style="background:#0ea5e9"></div><span class="ri-lbl">NLP &amp; LLMs</span></div>
+      <div class="ri-item"><div class="ri-dot" style="background:#0ea5e9"></div><span class="ri-lbl">Biomedical Text Mining</span></div>
+      <div class="ri-item"><div class="ri-dot" style="background:#0ea5e9"></div><span class="ri-lbl">Sequence Modeling</span></div>
+      <div class="ri-item"><div class="ri-dot" style="background:#14b8a6"></div><span class="ri-lbl">Deep Learning</span></div>
+      <div class="ri-item"><div class="ri-dot" style="background:#14b8a6"></div><span class="ri-lbl">Multimodal Sensing</span></div>
+      <div class="ri-item"><div class="ri-dot" style="background:#f43f5e"></div><span class="ri-lbl">Fairness &amp; Ethical AI</span></div>
+      <div class="ri-item"><div class="ri-dot" style="background:#f43f5e"></div><span class="ri-lbl">Bias Mitigation</span></div>
+      <div class="ri-item"><div class="ri-dot" style="background:#a855f7"></div><span class="ri-lbl">Privacy-Preserving ML</span></div>
+      <div class="ri-item"><div class="ri-dot" style="background:#14b8a6"></div><span class="ri-lbl">Digital Health &amp; IoT</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- â”€â”€ PUBLICATIONS â”€â”€ -->
+<section id="publications" class="sec">
+  <div class="pill-line" data-aos="fade-right"></div>
+  <h2 class="sec-title" data-aos="fade-up">Publications</h2>
+  <p class="sec-sub" data-aos="fade-up" data-aos-delay="50">
+    Showing most-cited works and all recent papers (2022-present).
+    Full list on <a href="https://scholar.google.com/citations?user=HmABBvgAAAAJ&hl=en&authuser=1" target="_blank">Google Scholar <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:.7rem"></i></a>.
+  </p>
+  <div class="pub-filters" data-aos="fade-up" data-aos-delay="70">
+    <button class="pf active" onclick="filterPubs('all',this)">All Papers</button>
+    <button class="pf" onclick="filterPubs('recent',this)"><i class="fa-solid fa-clock" style="font-size:.75rem;margin-right:4px"></i>Recent (2022+)</button>
+    <button class="pf" onclick="filterPubs('conf',this)">Conference</button>
+    <button class="pf" onclick="filterPubs('book',this)">Book Chapters</button>
+  </div>
+  <div class="pub-list" id="pub-list">
+
+    <!-- 2026 -->
+    <div class="pub-card" data-type="conf" data-year="2026" data-cite="0" data-aos="fade-up">
+      <div class="pub-row">
+        <div class="pub-meta">
+          <span class="pub-type pt-conf">Conference</span>
+          <span class="pub-year">2026</span>
+        </div>
+      </div>
+      <div class="pub-title">Gamified ADHD Interventions through Intelligent Technology</div>
+      <div class="pub-authors"><strong>S M Mazharul Hoque Chowdhury</strong> et al.</div>
+      <div class="pub-venue">11th International Conference on Information &amp; Communication Technology for Intelligent Systems (ICTIS 2026), Bangkok, Thailand, April 9-11, 2026</div>
+      <div class="pub-actions">
+        <a href="papers/Gamified ADHD Interventions through.pdf" class="pub-btn" target="_blank"><i class="fa-solid fa-download"></i>PDF</a>
+      </div>
+    </div>
+
+    <!-- 2024 -->
+    <div class="pub-card" data-type="conf" data-year="2024" data-cite="1" data-aos="fade-up">
+      <div class="pub-row">
+        <div class="pub-meta">
+          <span class="pub-type pt-conf">Conference</span>
+          <span class="pub-year">2024</span>
+          <span class="pub-cite"><i class="fa-solid fa-quote-left"></i>1 citation</span>
+        </div>
+      </div>
+      <div class="pub-title">Wikipedia Empowered Natural Language Interface for Web Search</div>
+      <div class="pub-authors">H. Wang, <strong>S. M. M. H. Chowdhury</strong>, W. Jin</div>
+      <div class="pub-venue">International Conference on Web Information Systems Engineering (WISE), Pages 14-25</div>
+      <div class="pub-actions">
+        <a href="papers/Wikipedia Empowered Natural Language.pdf" class="pub-btn" target="_blank"><i class="fa-solid fa-download"></i>PDF</a>
+      </div>
+      <div class="cite-impact"><div class="cite-bar-wrap"><div class="cite-bar" data-width="2" style="background:linear-gradient(to right,#0ea5e9,#2563eb)"></div></div></div>
+    </div>
+
+    <!-- 2023 -->
+    <div class="pub-card" data-type="book" data-year="2023" data-cite="1" data-aos="fade-up">
+      <div class="pub-row">
+        <div class="pub-meta">
+          <span class="pub-type pt-book">Book Chapter</span>
+          <span class="pub-year">2023</span>
+          <span class="pub-cite"><i class="fa-solid fa-quote-left"></i>1 citation</span>
+        </div>
+      </div>
+      <div class="pub-title">Finding New Connections Between Concepts from MEDLINE Database Incorporating Domain Knowledge</div>
+      <div class="pub-authors">Y. Weikang, <strong>C. S. M. M. Hoque</strong>, J. Wei</div>
+      <div class="pub-venue">Research Advances in Data Mining Techniques and Applications</div>
+      <div class="pub-actions">
+        <a href="papers/Finding new connections between concepts from medline database incorporating domain knowledge.pdf" class="pub-btn" target="_blank"><i class="fa-solid fa-download"></i>PDF</a>
+      </div>
+      <div class="cite-impact"><div class="cite-bar-wrap"><div class="cite-bar" data-width="2" style="background:linear-gradient(to right,#f59e0b,#fbbf24)"></div></div></div>
+    </div>
+
+    <!-- 2022 -->
+    <div class="pub-card" data-type="conf" data-year="2022" data-cite="0" data-aos="fade-up">
+      <div class="pub-row">
+        <div class="pub-meta">
+          <span class="pub-type pt-conf">Conference</span>
+          <span class="pub-year">2022</span>
+        </div>
+      </div>
+      <div class="pub-title">Finding Hidden Relationships Between Medical Concepts by Leveraging MetaMap and Text Mining Techniques</div>
+      <div class="pub-authors">Weikang Yang, <strong>S. M. M. H. Chowdhury</strong>, W. Jin</div>
+      <div class="pub-venue">18th International Conference on Advanced Data Mining and Applications (ADMA)</div>
+      <div class="pub-actions">
+        <a href="papers/Finding Hidden Relationships Between Medical.pdf" class="pub-btn" target="_blank"><i class="fa-solid fa-download"></i>PDF</a>
+      </div>
+    </div>
+
+    <!-- 2021 -->
+    <div class="pub-card" data-type="conf" data-year="2021" data-cite="16" data-aos="fade-up">
+      <div class="pub-row">
+        <div class="pub-meta">
+          <span class="pub-type pt-conf">Conference</span>
+          <span class="pub-year">2021</span>
+          <span class="pub-cite"><i class="fa-solid fa-quote-left"></i>16 citations</span>
+        </div>
+      </div>
+      <div class="pub-title">Gesture-Based Smart Wheelchair for Assisting Physically Challenged People</div>
+      <div class="pub-authors">S. Basak, F. F. Nandiny, <strong>S. M. M. H. Chowdhury</strong>, A. A. Biswas</div>
+      <div class="pub-venue">2021 International Conference on Computer Communication and Informatics (ICCCI)</div>
+      <div class="cite-impact"><div class="cite-bar-wrap"><div class="cite-bar" data-width="34" style="background:linear-gradient(to right,#14b8a6,#0ea5e9)"></div></div></div>
+    </div>
+
+    <!-- 2019 â€“ 47 citations -->
+    <div class="pub-card" data-type="conf" data-year="2019" data-cite="47" data-aos="fade-up">
+      <div class="pub-row">
+        <div class="pub-meta">
+          <span class="pub-type pt-conf">Conference</span>
+          <span class="pub-year">2019</span>
+          <span class="pub-cite"><i class="fa-solid fa-quote-left"></i>47 citations</span>
+        </div>
+      </div>
+      <div class="pub-title">Implementation of Machine Learning to Detect Hate Speech in Bangla Language</div>
+      <div class="pub-authors">S. Ahammed, M. Rahman, M. H. Niloy, <strong>S. M. M. H. Chowdhury</strong></div>
+      <div class="pub-venue">2019 8th International Conference System Modeling and Advancement in Research Trends (SMART)</div>
+      <div class="cite-impact"><div class="cite-bar-wrap"><div class="cite-bar" data-width="100" style="background:linear-gradient(to right,#f59e0b,#f43f5e)"></div></div></div>
+    </div>
+
+    <!-- 2019 â€“ 38 citations -->
+    <div class="pub-card" data-type="conf" data-year="2019" data-cite="38" data-aos="fade-up">
+      <div class="pub-row">
+        <div class="pub-meta">
+          <span class="pub-type pt-conf">Conference</span>
+          <span class="pub-year">2019</span>
+          <span class="pub-cite"><i class="fa-solid fa-quote-left"></i>38 citations</span>
+        </div>
+      </div>
+      <div class="pub-title">Bengali Text Generation Using Bi-directional RNN</div>
+      <div class="pub-authors">S. Abujar, A. K. M. Masum, <strong>S. M. M. H. Chowdhury</strong>, M. Hasan, S. A. Hossain</div>
+      <div class="pub-venue">10th International Conference on Computing, Communication and Networking Technologies (ICCCNT)</div>
+      <div class="pub-actions">
+        <a href="https://drive.google.com/file/d/1ne7rUwa8OcqLRfezZZz9GZKp0_ocsTaZ/view?usp=sharing" class="pub-btn" target="_blank"><i class="fa-solid fa-external-link"></i>View</a>
+      </div>
+      <div class="cite-impact"><div class="cite-bar-wrap"><div class="cite-bar" data-width="81" style="background:linear-gradient(to right,#7c3aed,#4f46e5)"></div></div></div>
+    </div>
+
+    <!-- 2019 â€“ 31 citations -->
+    <div class="pub-card" data-type="conf" data-year="2019" data-cite="31" data-aos="fade-up">
+      <div class="pub-row">
+        <div class="pub-meta">
+          <span class="pub-type pt-conf">Conference</span>
+          <span class="pub-year">2019</span>
+          <span class="pub-cite"><i class="fa-solid fa-quote-left"></i>31 citations</span>
+        </div>
+      </div>
+      <div class="pub-title">A Review Paper on Comparison of Different Algorithms Used in Text Summarization</div>
+      <div class="pub-authors">S. Basak, M. D. D. H. Gazi, <strong>S M Mazharul Hoque Chowdhury</strong></div>
+      <div class="pub-venue">International Conference on Intelligent Data Communication Technologies and Internet of Things (ICICI), Springer LNDECT vol. 38</div>
+      <div class="pub-actions">
+        <a href="https://drive.google.com/file/d/10cY3UxA_SjzFiCZtVMkakoTGp3tdeQxT/view?usp=sharing" class="pub-btn" target="_blank"><i class="fa-solid fa-external-link"></i>View</a>
+      </div>
+      <div class="cite-impact"><div class="cite-bar-wrap"><div class="cite-bar" data-width="66" style="background:linear-gradient(to right,#4f46e5,#0ea5e9)"></div></div></div>
+    </div>
+
+    <!-- 2018 â€“ 14 citations -->
+    <div class="pub-card" data-type="conf" data-year="2018" data-cite="14" data-aos="fade-up">
+      <div class="pub-row">
+        <div class="pub-meta">
+          <span class="pub-type pt-conf">Conference</span>
+          <span class="pub-year">2018</span>
+          <span class="pub-cite"><i class="fa-solid fa-quote-left"></i>14 citations</span>
+        </div>
+      </div>
+      <div class="pub-title">Sentiment Analysis of Tweet Data: The Study of Sentimental State of Human from Tweet Text</div>
+      <div class="pub-authors"><strong>S M Mazharul Hoque Chowdhury</strong>, P. Ghosh, S. Abujar, M. A. Afrin, S. A. Hossain</div>
+      <div class="pub-venue">Emerging Technologies in Data Mining and Information Security, AISC vol. 813, pp. 3-14, DOI: 10.1007/978-981-13-1498-8_1</div>
+      <div class="pub-actions">
+        <a href="https://drive.google.com/file/d/11iNDwtnODplAw3HI-rzx3DzS5pj416um/view?usp=sharing" class="pub-btn" target="_blank"><i class="fa-solid fa-external-link"></i>View</a>
+      </div>
+      <div class="cite-impact"><div class="cite-bar-wrap"><div class="cite-bar" data-width="30" style="background:linear-gradient(to right,#0ea5e9,#14b8a6)"></div></div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- â”€â”€ RESEARCH PROJECTS â”€â”€ -->
+<section id="research" class="sec sec-alt">
+  <div class="pill-line" data-aos="fade-right"></div>
+  <h2 class="sec-title" data-aos="fade-up">Research Projects</h2>
+  <p class="sec-sub" data-aos="fade-up" data-aos-delay="50">A selection of research projects spanning accessibility, NLP, biomedical informatics, and intelligent systems.</p>
+  <div class="rc-grid">
+    <div class="rc" data-aos="fade-up" data-aos-delay="0" role="button" tabindex="0" aria-expanded="false">
+      <div class="rc-img"><img src="img/lab/adhd_research.png" alt="ADHD"/><span class="rc-lbl">Current PhD</span></div>
+      <div class="rc-body">
+        <h4>Gamification of ADHD Treatment</h4>
+        <p class="rc-summary">Accessibility-centered HCI research exploring supportive game mechanics, with NLP and ML used to personalize therapeutic experiences.</p>
+        <div class="rc-details">
+          <div class="rc-detail-list">
+            <span>This project investigates how game-based interaction can make ADHD care more engaging, structured, and cognitively supportive for users with different accessibility needs.</span>
+            <span>The work combines inclusive HCI design with adaptive feedback systems so the experience can respond to attention, motivation, and task progression more intelligently.</span>
+            <span>NLP and machine learning act as supporting layers for personalization, communication, and therapeutic guidance rather than replacing the human-centered design core.</span>
+          </div>
+          <div class="rc-links">
+            <div class="rc-link-card">
+              <div class="rc-link-title">Related publication: Gamified ADHD Interventions through Intelligent Technology</div>
+              <a href="papers/Gamified ADHD Interventions through.pdf" class="rc-link-btn" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-book-open" aria-hidden="true"></i>Explore Related Publication</a>
+            </div>
+          </div>
+        </div>
+        <div class="rc-toggle">Click to explore more <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></div>
+      </div>
+    </div>
+    <div class="rc" data-aos="fade-up" data-aos-delay="60" role="button" tabindex="0" aria-expanded="false">
+      <div class="rc-img"><img src="img/lab/tm.png" alt="NLP"/></div>
+      <div class="rc-body">
+        <h4>Wikipedia-Empowered NLI for Web Search</h4>
+        <p class="rc-summary">Natural language interface leveraging Wikipedia as structured knowledge to improve query understanding and information retrieval.</p>
+        <div class="rc-details">
+          <div class="rc-detail-list">
+            <span>This work develops a natural language interface that uses Wikipedia as a structured knowledge layer for clarifying entities, concepts, and user intent during web search.</span>
+            <span>The project focuses on improving how ambiguous queries are interpreted so search becomes more context-aware, semantically grounded, and useful for real users.</span>
+            <span>It connects NLP, knowledge representation, and information retrieval in a way that supports more explainable and human-friendly search interaction.</span>
+          </div>
+          <div class="rc-links">
+            <div class="rc-link-card">
+              <div class="rc-link-title">Related publication: Wikipedia Empowered Natural Language Interface for Web Search</div>
+              <a href="https://dl.acm.org/doi/10.1007/978-981-96-0579-8_2" class="rc-link-btn" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>Explore Related Publication</a>
+            </div>
+          </div>
+        </div>
+        <div class="rc-toggle">Click to explore more <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></div>
+      </div>
+    </div>
+    <div class="rc" data-aos="fade-up" data-aos-delay="120" role="button" tabindex="0" aria-expanded="false">
+      <div class="rc-img"><img src="img/lab/pr.png" alt="Biomedical"/></div>
+      <div class="rc-body">
+        <h4>Biomedical Knowledge Discovery</h4>
+        <p class="rc-summary">MetaMap and text mining on MEDLINE to uncover hidden relationships between medical concepts for clinical decision support.</p>
+        <div class="rc-details">
+          <div class="rc-detail-list">
+            <span>This research theme uses biomedical text mining and domain-aware concept mapping to uncover meaningful relationships hidden across large MEDLINE-scale literature collections.</span>
+            <span>One direction emphasizes domain knowledge integration to discover previously overlooked links between medical concepts, while another leverages MetaMap and text mining for relationship extraction.</span>
+            <span>Together, these studies support smarter biomedical knowledge discovery workflows for literature analysis, evidence synthesis, and future decision support systems.</span>
+          </div>
+          <div class="rc-links">
+            <div class="rc-link-card">
+              <div class="rc-link-title">Finding New Connections between Concepts from Medline Database Incorporating Domain Knowledge</div>
+              <a href="https://www.intechopen.com/chapters/88313" class="rc-link-btn" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-book-medical" aria-hidden="true"></i>Explore Publication 1</a>
+            </div>
+            <div class="rc-link-card">
+              <div class="rc-link-title">Finding Hidden Relationships Between Medical Concepts by Leveraging Metamap and Text Mining Techniques</div>
+              <a href="https://dl.acm.org/doi/10.1007/978-3-031-22064-7_4" class="rc-link-btn" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-microscope" aria-hidden="true"></i>Explore Publication 2</a>
+            </div>
+          </div>
+        </div>
+        <div class="rc-toggle">Click to explore more <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></div>
+      </div>
+    </div>
+    <div class="rc" data-aos="fade-up" data-aos-delay="0" role="button" tabindex="0" aria-expanded="false">
+      <div class="rc-img"><img src="img/lab/sw.png" alt="Wheelchair"/></div>
+      <div class="rc-body">
+        <h4>Gesture-Based Smart Wheelchair</h4>
+        <p class="rc-summary">IoT-enabled wheelchair controlled by hand gestures with emergency SMS functionality - intersects directly with current accessibility research.</p>
+        <div class="rc-details">
+          <div class="rc-detail-list">
+            <span>This assistive system was designed to improve mobility support through hand-gesture control, giving users a more intuitive interaction alternative to conventional physical input methods.</span>
+            <span>The wheelchair also integrates emergency SMS functionality so caregivers or family members can be contacted quickly when urgent support is needed.</span>
+            <span>The project connects directly to accessibility research because it addresses autonomy, usability, and assistive interaction design in a real-world context.</span>
+          </div>
+          <div class="rc-links">
+            <div class="rc-link-card">
+              <div class="rc-link-title">Related publication: Gesture-based Smart Wheelchair for Assisting Physically Challenged People</div>
+              <a href="https://ieeexplore.ieee.org/document/9402632" class="rc-link-btn" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-wheelchair-move" aria-hidden="true"></i>Explore Related Publication</a>
+            </div>
+          </div>
+        </div>
+        <div class="rc-toggle">Click to explore more <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></div>
+      </div>
+    </div>
+    <div class="rc" data-aos="fade-up" data-aos-delay="60" role="button" tabindex="0" aria-expanded="false">
+      <div class="rc-img"><img src="img/lab/sa.png" alt="Sentiment"/></div>
+      <div class="rc-body">
+        <h4>Sentiment Analysis Systems</h4>
+        <p class="rc-summary">Multiple projects analyzing Twitter and review data using hybrid supervised/unsupervised NLP and lexicon-based deep learning methods.</p>
+        <div class="rc-details">
+          <div class="rc-detail-list">
+            <span>This line of work focused on identifying emotional tone, opinion polarity, and human sentiment patterns from noisy real-world text such as tweets and review data.</span>
+            <span>The project explored hybrid NLP approaches that combine lexicon-based analysis with supervised and unsupervised learning strategies for stronger sentiment classification.</span>
+            <span>It helped build a strong foundation in applied NLP, text analytics, and feature-driven modeling that later informed broader machine learning research directions.</span>
+          </div>
+          <div class="rc-links">
+            <div class="rc-link-card">
+              <div class="rc-link-title">Related publication: Sentiment Analysis of Tweet Data: The Study of Sentimental State of Human from Tweet Text</div>
+              <a href="https://link-springer-com.libproxy.library.unt.edu/chapter/10.1007/978-981-13-1498-8_1" class="rc-link-btn" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-chart-line" aria-hidden="true"></i>Explore Related Publication</a>
+            </div>
+          </div>
+        </div>
+        <div class="rc-toggle">Click to explore more <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></div>
+      </div>
+    </div>
+    <div class="rc" data-aos="fade-up" data-aos-delay="120" role="button" tabindex="0" aria-expanded="false">
+      <div class="rc-img"><img src="img/lab/ro.png" alt="Robot"/></div>
+      <div class="rc-body">
+        <h4>Multi-Mode IoT Robot</h4>
+        <p class="rc-summary">Arduino-based robot controllable via voice, wireless, and full-automatic modes with IoT long-distance communication.</p>
+        <div class="rc-details">
+          <div class="rc-detail-list">
+            <span>This project explored a flexible robotics platform built to support multiple interaction modes depending on user needs, environmental context, and control preferences.</span>
+            <span>The robot could operate through wireless control, voice recognition, and fully automatic behavior while staying connected through IoT-based long-distance communication.</span>
+            <span>It brought together embedded systems, sensing, control logic, and interface adaptability in a way that emphasized both technical robustness and practical usability.</span>
+          </div>
+          <div class="rc-links">
+            <div class="rc-link-card">
+              <div class="rc-link-title">Related publication: IoT-Based Robot with Wireless and Voice Recognition Mode</div>
+              <a href="https://link-springer-com.libproxy.library.unt.edu/chapter/10.1007/978-981-13-1501-5_65" class="rc-link-btn" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-robot" aria-hidden="true"></i>Explore Related Publication</a>
+            </div>
+          </div>
+        </div>
+        <div class="rc-toggle">Click to explore more <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- â”€â”€ EXPERIENCE â”€â”€ -->
+<section id="experience" class="sec">
+  <div class="pill-line" data-aos="fade-right"></div>
+  <h2 class="sec-title" data-aos="fade-up">Experience &amp; Education</h2>
+  <p class="sec-sub" data-aos="fade-up" data-aos-delay="50">Academic roles, industry positions, and formal education spanning Bangladesh and the United States.</p>
+
+  <div class="two-col">
+    <div data-aos="fade-right" data-aos-delay="60">
+      <div class="section-divider"><span><i class="fa-solid fa-briefcase" style="margin-right:6px"></i>Work Experience</span></div>
+      <div class="tl">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">Aug 2023 - Present</div>
+          <div class="tl-title">Graduate Teaching Assistant (GTA)</div>
+          <div class="tl-place"><i class="fa-solid fa-location-dot" style="font-size:.68rem;margin-right:3px"></i>University of North Texas, Denton TX, USA</div>
+          <div class="tl-desc">Mentoring undergraduates in core CS and object-oriented programming lab environments, providing technical guidance and supporting coursework.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">Mar 2021 - Jun 2023</div>
+          <div class="tl-title">Faculty - O/A Level Computer Science</div>
+          <div class="tl-place"><i class="fa-solid fa-location-dot" style="font-size:.68rem;margin-right:3px"></i>Abdul Kadir Molla International School</div>
+          <div class="tl-desc">Delivered advanced Cambridge O/A Level Computer Science curricula, achieving high international examination pass rates.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">Jan 2021 - Mar 2021</div>
+          <div class="tl-title">Research Associate</div>
+          <div class="tl-place"><i class="fa-solid fa-location-dot" style="font-size:.68rem;margin-right:3px"></i>Apurba-DIU Research &amp; Development Lab</div>
+          <div class="tl-desc">Contributed to R&amp;D projects integrating research prototypes into functional systems.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">Sep 2018 - Apr 2020</div>
+          <div class="tl-title">Lecturer</div>
+          <div class="tl-place"><i class="fa-solid fa-location-dot" style="font-size:.68rem;margin-right:3px"></i>Daffodil International University, Dhaka, Bangladesh</div>
+          <div class="tl-desc">Delivered lectures and practical lab sessions for undergraduate CSE students. Active member of DIU NLP &amp; ML Research Lab.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-aos="fade-left" data-aos-delay="60">
+      <div class="section-divider"><span><i class="fa-solid fa-graduation-cap" style="margin-right:6px"></i>Education</span></div>
+      <div class="tl">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2023 - Present</div>
+          <div class="tl-title">PhD in Computer Science &amp; Engineering</div>
+          <div class="tl-place">University of North Texas, Denton TX, USA</div>
+          <div class="tl-desc">Advisor: Dr. Stephanie Ludi. Research in adaptive, gamified ML for accessibility, fairness, and behavioral modeling.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2018 - 2019</div>
+          <div class="tl-title">M.Sc. in Computer Science</div>
+          <div class="tl-place">Jahangirnagar University, Dhaka, Bangladesh</div>
+          <div class="tl-desc">Graduate research in NLP, data mining, and machine learning.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2013 - 2017</div>
+          <div class="tl-title">B.Sc. in Computer Science &amp; Engineering</div>
+          <div class="tl-place">Daffodil International University, Dhaka, Bangladesh</div>
+          <div class="tl-desc">Foundation in CSE, active in research from early years.</div>
+        </div>
+      </div>
+
+      <div class="section-divider" style="margin-top:36px"><span><i class="fa-solid fa-code" style="margin-right:6px"></i>Technical Skills</span></div>
+      <p style="font-size:.73rem;color:var(--muted);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Languages &amp; Frameworks</p>
+      <div class="skill-list" id="skill-bars">
+        <div class="skill-item" data-pct="92"><div class="skill-header"><span class="skill-name">Python · PyTorch · TensorFlow</span><span class="skill-pct">92%</span></div><div class="skill-track"><div class="skill-bar" style="background:linear-gradient(to right,#4f46e5,#7c3aed)"></div></div></div>
+        <div class="skill-item" data-pct="88"><div class="skill-header"><span class="skill-name">NLP · Transformers · LLMs</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-bar" style="background:linear-gradient(to right,#0ea5e9,#2563eb)"></div></div></div>
+        <div class="skill-item" data-pct="85"><div class="skill-header"><span class="skill-name">Scikit-learn · Pandas · NumPy</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-bar" style="background:linear-gradient(to right,#14b8a6,#0ea5e9)"></div></div></div>
+        <div class="skill-item" data-pct="80"><div class="skill-header"><span class="skill-name">HCI · Accessibility Design</span><span class="skill-pct">80%</span></div><div class="skill-track"><div class="skill-bar" style="background:linear-gradient(to right,#10b981,#14b8a6)"></div></div></div>
+        <div class="skill-item" data-pct="75"><div class="skill-header"><span class="skill-name">C / C++ · Systems Programming</span><span class="skill-pct">75%</span></div><div class="skill-track"><div class="skill-bar" style="background:linear-gradient(to right,#a855f7,#7c3aed)"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider" data-aos="fade-up"><span><i class="fa-solid fa-trophy" style="margin-right:6px"></i>Honors &amp; Awards</span></div>
+  <div class="three-col">
+    <div class="award-card" data-aos="fade-up" data-aos-delay="0">
+      <div class="aw-icon"><i class="fa-solid fa-trophy" aria-hidden="true"></i></div>
+      <div><div class="aw-year">Mar 2020</div><div class="aw-title">Research Recognition Award</div><div class="aw-desc">DIU - for Scopus-indexed research publications in 2020.</div></div>
+    </div>
+    <div class="award-card" data-aos="fade-up" data-aos-delay="70">
+      <div class="aw-icon"><i class="fa-solid fa-medal" aria-hidden="true"></i></div>
+      <div><div class="aw-year">Feb 2019</div><div class="aw-title">Research Recognition Award</div><div class="aw-desc">DIU - for Scopus-indexed research contributions in 2019.</div></div>
+    </div>
+    <div class="award-card" data-aos="fade-up" data-aos-delay="140">
+      <div class="aw-icon"><i class="fa-solid fa-star" aria-hidden="true"></i></div>
+      <div><div class="aw-year">2018</div><div class="aw-title">DIU NLP Lab Excellence</div><div class="aw-desc">Recognized for extraordinary effort and inspiring students toward AI research.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- â”€â”€ TEACHING â”€â”€ -->
+<section id="teaching" class="sec sec-alt">
+  <div class="pill-line" data-aos="fade-right"></div>
+  <h2 class="sec-title" data-aos="fade-up">Teaching</h2>
+  <p class="sec-sub" data-aos="fade-up" data-aos-delay="50">Teaching experience spanning PhD-level TA work, Cambridge O/A Level instruction, and undergraduate university courses.</p>
+  <div class="two-col" style="margin-bottom:44px">
+    <div class="card" data-aos="fade-right">
+      <div class="teach-badge tb-green"><i class="fa-solid fa-circle"></i>Current - UNT GTA (2023-Present)</div>
+      <div class="ci sky"><i class="fa-solid fa-laptop-code"></i></div>
+      <h4 style="font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:4px">CS Core &amp; OOP Lab</h4>
+      <div style="font-size:.78rem;color:var(--sky);margin-bottom:8px">University of North Texas</div>
+      <p style="font-size:.82rem;color:var(--muted);line-height:1.7">Mentoring undergraduate students, providing technical guidance in lab sessions, grading, and supporting course logistics for core computer science subjects and object-oriented programming.</p>
+    </div>
+    <div class="card" data-aos="fade-left">
+      <div class="teach-badge tb-gold"><i class="fa-solid fa-clock"></i>2021 - 2023</div>
+      <div class="ci gold"><i class="fa-solid fa-school"></i></div>
+      <h4 style="font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:4px">O/A Level Computer Science</h4>
+      <div style="font-size:.78rem;color:var(--sky);margin-bottom:8px">Abdul Kadir Molla International School</div>
+      <p style="font-size:.82rem;color:var(--muted);line-height:1.7">Taught advanced Computer Science following Cambridge O/A Level standards, covering algorithms, data structures, and programming. Achieved high international examination pass rates over two years.</p>
+    </div>
+  </div>
+  <div class="section-divider" data-aos="fade-up"><span><i class="fa-solid fa-clock-rotate-left" style="margin-right:6px"></i>Previous Courses - Daffodil International University (2018-2020)</span></div>
+  <div class="course-grid">
+    <div class="course-card" data-aos="fade-up" data-aos-delay="0"><div class="ci"><i class="fa-solid fa-microchip"></i></div><h4>Microprocessor &amp; Assembly Language</h4><p>Architecture, assembly programming, and assembler role in machine code translation.</p></div>
+    <div class="course-card" data-aos="fade-up" data-aos-delay="50"><div class="ci sky"><i class="fa-solid fa-server"></i></div><h4>Operating Systems</h4><p>Process management, memory, file systems, and the OS as hardware-application interface.</p></div>
+    <div class="course-card" data-aos="fade-up" data-aos-delay="100"><div class="ci teal"><i class="fa-solid fa-brain"></i></div><h4>Artificial Intelligence</h4><p>AI fundamentals, search algorithms, ML basics, and intelligent agent design.</p></div>
+    <div class="course-card" data-aos="fade-up" data-aos-delay="0"><div class="ci gold"><i class="fa-solid fa-sitemap"></i></div><h4>Computer Architecture</h4><p>Internal workings and structural implementation of computer systems.</p></div>
+    <div class="course-card" data-aos="fade-up" data-aos-delay="50"><div class="ci"><i class="fa-solid fa-infinity"></i></div><h4>Theory of Computing</h4><p>Automata theory, formal languages, computability, and complexity.</p></div>
+    <div class="course-card" data-aos="fade-up" data-aos-delay="100"><div class="ci sky"><i class="fa-solid fa-diagram-project"></i></div><h4>System Analysis &amp; Design</h4><p>Client-oriented system design, requirement engineering, and project planning.</p></div>
+  </div>
+</section>
+
+<!-- â”€â”€ GALLERY â”€â”€ -->
+<section id="gallery" class="sec">
+  <div class="pill-line" data-aos="fade-right"></div>
+  <h2 class="sec-title" data-aos="fade-up">Gallery</h2>
+  <p class="sec-sub" data-aos="fade-up" data-aos-delay="50">A few photographs.</p>
+  <div class="gal-grid">
+    <div class="gal-item" data-aos="zoom-in" data-aos-delay="0" role="button" tabindex="0" aria-label="Open portrait photo"><img src="img/profile/profile_photo.JPG" alt="Portrait of S M Mazharul Hoque Chowdhury"/><div class="gal-ov"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i></div></div>
+    <div class="gal-item" data-aos="zoom-in" data-aos-delay="60" role="button" tabindex="0" aria-label="Open campus photo"><img src="img/gallery/campus_photo.JPG" alt="Campus photograph at the University of North Texas"/><div class="gal-ov"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i></div></div>
+    <div class="gal-item" data-aos="zoom-in" data-aos-delay="120" role="button" tabindex="0" aria-label="Open cover photo"><img src="img/gallery/cover_photo.JPG" alt="Cover photograph from academic and research activities"/><div class="gal-ov"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i></div></div>
+    <div class="gal-item" data-aos="zoom-in" data-aos-delay="0" role="button" tabindex="0" aria-label="Open gallery image 1"><img src="img/gallery/1.jpg" alt="Gallery image 1"/><div class="gal-ov"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i></div></div>
+    <div class="gal-item" data-aos="zoom-in" data-aos-delay="60" role="button" tabindex="0" aria-label="Open gallery image 2"><img src="img/gallery/2.jpg" alt="Gallery image 2"/><div class="gal-ov"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i></div></div>
+    <div class="gal-item" data-aos="zoom-in" data-aos-delay="120" role="button" tabindex="0" aria-label="Open gallery image 3"><img src="img/gallery/3.jpg" alt="Gallery image 3"/><div class="gal-ov"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i></div></div>
+  </div>
+</section>
+
+<!-- â”€â”€ CONTACT â”€â”€ -->
+<section id="contact" class="sec sec-alt">
+  <div class="pill-line" data-aos="fade-right"></div>
+  <h2 class="sec-title" data-aos="fade-up">Get in Touch</h2>
+  <p class="sec-sub" data-aos="fade-up" data-aos-delay="50">Happy to connect about research collaborations, ML/AI opportunities, or general inquiries.</p>
+  <div class="contact-grid">
+    <div data-aos="fade-right">
+      <div class="ci-row"><div class="ci-icon"><i class="fa-solid fa-envelope"></i></div><div><div class="ci-lbl">Email</div><div class="ci-val"><a href="mailto:smmazhar.cse@gmail.com">smmazhar.cse@gmail.com</a></div></div></div>
+      <div class="ci-row"><div class="ci-icon"><i class="fa-solid fa-location-dot"></i></div><div><div class="ci-lbl">Location</div><div class="ci-val">Denton, TX, USA - U.S. Permanent Resident</div></div></div>
+      <div class="ci-row"><div class="ci-icon"><i class="fa-brands fa-linkedin-in"></i></div><div><div class="ci-lbl">LinkedIn</div><div class="ci-val"><a href="https://www.linkedin.com/in/s-m-mazharul-hoque-chowdhury-989026112/" target="_blank" rel="noopener noreferrer">S M Mazharul Hoque Chowdhury</a></div></div></div>
+      <div class="ci-row"><div class="ci-icon"><i class="fa-brands fa-github"></i></div><div><div class="ci-lbl">GitHub</div><div class="ci-val"><a href="https://github.com/mazharul2213" target="_blank" rel="noopener noreferrer">github.com/mazharul2213</a></div></div></div>
+      <div class="ci-row"><div class="ci-icon"><i class="fa-solid fa-graduation-cap"></i></div><div><div class="ci-lbl">Google Scholar</div><div class="ci-val"><a href="https://scholar.google.com/citations?user=HmABBvgAAAAJ&hl=en&authuser=1" target="_blank" rel="noopener noreferrer">View Scholar Profile</a></div></div></div>
+    </div>
+    <div data-aos="fade-left" data-aos-delay="80">
+      <div class="contact-card">
+        <h3><i class="fa-solid fa-building-columns" style="color:var(--indigo);margin-right:9px"></i>University of North Texas</h3>
+        <p>I am currently a PhD student and GTA at the University of North Texas, Denton, TX 76203, USA, working within the Accessibility Research Group under Dr. Stephanie Ludi.</p>
+      </div>
+      <div class="contact-card">
+        <h3><i class="fa-solid fa-handshake" style="color:var(--indigo);margin-right:9px"></i>Open to Collaboration</h3>
+        <p>Actively seeking ML/AI internships and research collaborations. Interested in: accessibility, adaptive ML, NLP &amp; LLMs, gamified digital health, and ethical AI. Feel free to reach out.</p>
+        <div style="margin-top:18px">
+          <a href="./file/CV-Chowdhury.pdf" class="btn-g" target="_blank" rel="noopener noreferrer" style="display:inline-flex"><i class="fa-solid fa-download"></i>Download CV</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:56px;padding-top:28px;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:.76rem" data-aos="fade-up">
+    <p>&copy; 2026 S M Mazharul Hoque Chowdhury &nbsp;·&nbsp; University of North Texas, Denton, TX &nbsp;·&nbsp; <a href="mailto:smmazhar.cse@gmail.com">smmazhar.cse@gmail.com</a></p>
+  </div>
+</section>
+
+</main>
+
+<!-- AOS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+'use strict';
+// â”€â”€ AOS â”€â”€
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+AOS.init({
+  duration: prefersReducedMotion ? 0 : 700,
+  once:true,
+  offset: prefersReducedMotion ? 0 : 60,
+  disable: prefersReducedMotion
+});
+
+// â”€â”€ SCROLL PROGRESS â”€â”€
+const prog = document.getElementById('scroll-progress');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+  prog.style.width = pct + '%';
+}, {passive:true});
+
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// FLOATING RESEARCH KEYWORDS IN HERO
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+(function(){
+  const container = document.getElementById('float-kw-container');
+  if(prefersReducedMotion || !container) return;
+  const keywords = ['HCI','Accessibility','ADHD Treatment','Gamification',
+    'Inclusive Design','Cognitive Support','NLP','Machine Learning',
+    'Digital Health','Ethical AI','Adaptive Systems','Behavioral Modeling'];
+  const colors = ['rgba(74,111,165,.18)','rgba(99,164,198,.16)','rgba(88,176,156,.16)',
+    'rgba(217,164,65,.14)','rgba(124,130,185,.14)','rgba(118,176,138,.14)'];
+
+  function spawn(){
+    const kw = document.createElement('div');
+    const word = keywords[Math.floor(Math.random()*keywords.length)];
+    const col = colors[Math.floor(Math.random()*colors.length)];
+    kw.className = 'float-kw';
+    kw.textContent = word;
+    const left = 5 + Math.random()*85;
+    const dur  = 8 + Math.random()*10;
+    const del  = Math.random()*3;
+    kw.style.cssText = `left:${left}%;bottom:0;background:${col};animation-duration:${dur}s;animation-delay:${del}s;font-size:${.68+Math.random()*.1}rem`;
+    container.appendChild(kw);
+    setTimeout(() => kw.remove(), (dur + del + 1) * 1000);
+  }
+  // Initial burst
+  for(let i=0;i<6;i++) spawn();
+  setInterval(spawn, 2400);
+})();
+
+(function(){
+  const hero = document.getElementById('about');
+  const cv = document.getElementById('hero-fx');
+  const orbit = document.querySelector('.h-photo-orbit');
+  const photo = document.querySelector('.h-photo-image');
+  const fighter = orbit?.querySelector('.h-orbit-fighter');
+  if(prefersReducedMotion || !hero || !cv || !orbit || !photo || !fighter) return;
+
+  const cx = cv.getContext('2d');
+  let W = 0, H = 0, dpr = 1, last = performance.now(), bulletTimer = 0, missileTimer = 0;
+  const bullets = [];
+  const missiles = [];
+  const sparks = [];
+  const bursts = [
+    {x:.17, y:.18},
+    {x:.48, y:.12},
+    {x:.82, y:.18},
+    {x:.87, y:.42},
+    {x:.76, y:.72},
+    {x:.42, y:.78}
+  ];
+
+  function resize(){
+    W = hero.clientWidth;
+    H = hero.offsetHeight;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.max(1, Math.round(W * dpr));
+    cv.height = Math.max(1, Math.round(H * dpr));
+    cv.style.width = W + 'px';
+    cv.style.height = H + 'px';
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function getTrack(){
+    const heroRect = hero.getBoundingClientRect();
+    const photoRect = photo.getBoundingClientRect();
+    const pad = 8;
+    const offset = 16;
+    const x = photoRect.left - heroRect.left - offset;
+    const y = photoRect.top - heroRect.top - offset;
+    const w = photoRect.width + offset * 2;
+    const h = photoRect.height + offset * 2;
+    const topLen = Math.max(30, w - pad * 2);
+    const rightLen = Math.max(30, h - pad * 2);
+    return {x, y, w, h, pad, topLen, rightLen, total: topLen * 2 + rightLen * 2};
+  }
+
+  function pointOnTrack(progress){
+    const t = getTrack();
+    let dist = progress * t.total;
+    if(dist <= t.topLen) return {x:t.x + t.pad + dist, y:t.y + t.pad, angle:90};
+    dist -= t.topLen;
+    if(dist <= t.rightLen) return {x:t.x + t.w - t.pad, y:t.y + t.pad + dist, angle:180};
+    dist -= t.rightLen;
+    if(dist <= t.topLen) return {x:t.x + t.w - t.pad - dist, y:t.y + t.h - t.pad, angle:270};
+    dist -= t.topLen;
+    return {x:t.x + t.pad, y:t.y + t.h - t.pad - dist, angle:0};
+  }
+
+  function heading(angle){
+    const rad = (angle - 90) * Math.PI / 180;
+    return {x:Math.cos(rad), y:Math.sin(rad)};
+  }
+
+  function launchBullet(ship){
+    const dir = heading(ship.angle);
+    const speed = 240 + Math.random() * 40;
+    bullets.push({
+      x: ship.x + dir.x * 20,
+      y: ship.y + dir.y * 20,
+      px: ship.x,
+      py: ship.y,
+      vx: dir.x * speed,
+      vy: dir.y * speed,
+      life: .26 + Math.random() * .08
+    });
+  }
+
+  function launchMissile(ship){
+    const dir = heading(ship.angle);
+    const target = bursts[Math.floor(Math.random() * bursts.length)];
+    missiles.push({
+      x: ship.x + dir.x * 22,
+      y: ship.y + dir.y * 22,
+      tx: target.x * W,
+      ty: target.y * H,
+      speed: 180 + Math.random() * 45,
+      hue: [190, 220, 255, 45][Math.floor(Math.random() * 4)],
+      trail: [],
+      angle: Math.atan2(dir.y, dir.x)
+    });
+  }
+
+  function explode(x, y, hue){
+    const colors = [
+      `hsla(${hue},100%,65%,1)`,
+      'rgba(255,255,255,.95)',
+      'rgba(131,95,255,.9)',
+      'rgba(33,197,255,.9)'
+    ];
+    for(let i = 0; i < 18; i++){
+      const ang = (Math.PI * 2 * i) / 18 + Math.random() * .12;
+      const speed = 55 + Math.random() * 95;
+      sparks.push({
+        x, y,
+        vx: Math.cos(ang) * speed,
+        vy: Math.sin(ang) * speed,
+        life: .72 + Math.random() * .36,
+        radius: 1.5 + Math.random() * 2.8,
+        color: colors[i % colors.length]
+      });
+    }
+  }
+
+  function drawBullet(b){
+    cx.beginPath();
+    cx.moveTo(b.px, b.py);
+    cx.lineTo(b.x, b.y);
+    cx.strokeStyle = 'rgba(128,214,255,.72)';
+    cx.lineWidth = 1.6;
+    cx.shadowBlur = 10;
+    cx.shadowColor = 'rgba(53,192,255,.7)';
+    cx.stroke();
+    cx.shadowBlur = 0;
+  }
+
+  function drawMissile(m){
+    cx.beginPath();
+    for(let i = 0; i < m.trail.length; i++){
+      const p = m.trail[i];
+      if(i === 0) cx.moveTo(p.x, p.y);
+      else cx.lineTo(p.x, p.y);
+    }
+    cx.strokeStyle = 'rgba(255,194,92,.32)';
+    cx.lineWidth = 2;
+    cx.stroke();
+
+    cx.save();
+    cx.translate(m.x, m.y);
+    cx.rotate(m.angle);
+    cx.shadowColor = 'rgba(255,194,92,.88)';
+    cx.shadowBlur = 14;
+
+    cx.beginPath();
+    cx.moveTo(4, 0);
+    cx.lineTo(1, 2.1);
+    cx.lineTo(-3.5, 2.1);
+    cx.lineTo(-5, 1.4);
+    cx.lineTo(-5, -1.4);
+    cx.lineTo(-3.5, -2.1);
+    cx.lineTo(1, -2.1);
+    cx.closePath();
+    cx.fillStyle = 'rgba(235,240,245,.98)';
+    cx.fill();
+
+    cx.beginPath();
+    cx.moveTo(-1.5, 0);
+    cx.lineTo(-4.5, 1.1);
+    cx.lineTo(-4.5, -1.1);
+    cx.closePath();
+    cx.fillStyle = 'rgba(255,96,86,.95)';
+    cx.fill();
+
+    cx.beginPath();
+    cx.moveTo(-5, 0);
+    cx.lineTo(-8, 1.1);
+    cx.lineTo(-8, -1.1);
+    cx.closePath();
+    cx.fillStyle = 'rgba(255,196,84,.82)';
+    cx.fill();
+
+    cx.beginPath();
+    cx.moveTo(-1.5, 2.1);
+    cx.lineTo(-3.5, 3.7);
+    cx.lineTo(-3.5, 1.1);
+    cx.closePath();
+    cx.fillStyle = 'rgba(160,205,255,.92)';
+    cx.fill();
+
+    cx.beginPath();
+    cx.moveTo(-1.5, -2.1);
+    cx.lineTo(-3.5, -3.7);
+    cx.lineTo(-3.5, -1.1);
+    cx.closePath();
+    cx.fillStyle = 'rgba(160,205,255,.92)';
+    cx.fill();
+
+    cx.shadowBlur = 0;
+    cx.restore();
+  }
+
+  function drawSpark(s){
+    cx.beginPath();
+    cx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+    cx.fillStyle = s.color;
+    cx.shadowColor = s.color;
+    cx.shadowBlur = 12;
+    cx.fill();
+    cx.shadowBlur = 0;
+  }
+
+  function frame(now){
+    const dt = Math.min(.032, (now - last) / 1000);
+    last = now;
+    resize();
+    cx.clearRect(0, 0, W, H);
+
+    const ship = pointOnTrack((now * 0.000055) % 1);
+    const heroRect = hero.getBoundingClientRect();
+    const orbitRect = orbit.getBoundingClientRect();
+    fighter.style.left = `${ship.x - (orbitRect.left - heroRect.left)}px`;
+    fighter.style.top = `${ship.y - (orbitRect.top - heroRect.top)}px`;
+    fighter.style.transform = `translate(-50%,-50%) rotate(${ship.angle}deg)`;
+
+    bulletTimer += dt;
+    missileTimer += dt;
+    if(bulletTimer > .14){
+      bulletTimer = 0;
+      launchBullet(ship);
+    }
+    if(missileTimer > 1.75){
+      missileTimer = 0;
+      launchMissile(ship);
+    }
+
+    for(let i = bullets.length - 1; i >= 0; i--){
+      const b = bullets[i];
+      b.life -= dt;
+      b.px = b.x;
+      b.py = b.y;
+      b.x += b.vx * dt;
+      b.y += b.vy * dt;
+      drawBullet(b);
+      if(b.life <= 0) bullets.splice(i, 1);
+    }
+
+    for(let i = missiles.length - 1; i >= 0; i--){
+      const m = missiles[i];
+      const dx = m.tx - m.x;
+      const dy = m.ty - m.y;
+      const dist = Math.hypot(dx, dy) || 1;
+      m.angle = Math.atan2(dy, dx);
+      m.x += (dx / dist) * m.speed * dt;
+      m.y += (dy / dist) * m.speed * dt;
+      m.trail.push({x:m.x, y:m.y});
+      if(m.trail.length > 14) m.trail.shift();
+      drawMissile(m);
+      if(dist < 16){
+        explode(m.tx, m.ty, m.hue);
+        missiles.splice(i, 1);
+      }
+    }
+
+    for(let i = sparks.length - 1; i >= 0; i--){
+      const s = sparks[i];
+      s.life -= dt;
+      s.vx *= .987;
+      s.vy = s.vy * .987 + 38 * dt;
+      s.x += s.vx * dt;
+      s.y += s.vy * dt;
+      s.radius *= .992;
+      drawSpark(s);
+      if(s.life <= 0 || s.radius < .4) sparks.splice(i, 1);
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  requestAnimationFrame(frame);
+  window.addEventListener('resize', resize);
+})();
+
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ADHD SYSTEM PIPELINE ANIMATION
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+(function(){
+  const cv = document.getElementById('adhd-pipeline');
+  if(prefersReducedMotion || !cv) return;
+  const cx = cv.getContext('2d');
+
+  const STAGES = [
+    {icon:'user', label:'User Context',  sub:'Attention & Needs',      col:'#4a6fa5'},
+    {icon:'access', label:'Accessible HCI', sub:'Inclusive Interaction',   col:'#58b09c'},
+    {icon:'game', label:'Game Design',   sub:'Motivation & Feedback',   col:'#d9a441'},
+    {icon:'chat', label:'NLP Support',   sub:'Adaptive Communication',  col:'#63a4c6'},
+    {icon:'target', label:'Outcomes',      sub:'Therapeutic Progress',    col:'#76b08a'},
+  ];
+
+  let W, H, particles=[], frame=0;
+  const ACTIVE = {stage: 0, timer: 0};
+
+  function resize(){
+    W = cv.width = cv.offsetWidth || cv.parentElement.offsetWidth || 800;
+    H = cv.height = cv.offsetHeight || 160;
+  }
+
+  function nodePos(i){
+    const pad = W*.06;
+    const step = (W - pad*2) / (STAGES.length - 1);
+    return {x: pad + i*step, y: H*.5};
+  }
+
+  function nodeRadius(isActive){
+    const pulse = isActive ? 1 + .15 * Math.sin(frame * .1) : 1;
+    return 24 * pulse;
+  }
+
+  function drawPipelineIcon(type, x, y, scale, color){
+    cx.save();
+    cx.translate(x, y);
+    cx.scale(scale, scale);
+    cx.strokeStyle = color;
+    cx.fillStyle = color;
+    cx.lineWidth = 1.9;
+    cx.lineCap = 'round';
+    cx.lineJoin = 'round';
+
+    if(type === 'user'){
+      cx.beginPath();
+      cx.arc(0, -4.5, 4.2, 0, Math.PI * 2);
+      cx.stroke();
+      cx.beginPath();
+      cx.moveTo(-7, 7);
+      cx.quadraticCurveTo(0, 1.5, 7, 7);
+      cx.stroke();
+    } else if(type === 'access'){
+      cx.beginPath();
+      cx.arc(0, -7.5, 2.4, 0, Math.PI * 2);
+      cx.fill();
+      cx.beginPath();
+      cx.moveTo(0, -4.5);
+      cx.lineTo(0, 6.5);
+      cx.moveTo(-8.5, -1.5);
+      cx.lineTo(8.5, -1.5);
+      cx.moveTo(0, 1.2);
+      cx.lineTo(-7.2, 9.2);
+      cx.moveTo(0, 1.2);
+      cx.lineTo(7.2, 9.2);
+      cx.stroke();
+    } else if(type === 'game'){
+      cx.beginPath();
+      cx.roundRect(-9, -5.5, 18, 11, 5);
+      cx.stroke();
+      cx.beginPath();
+      cx.moveTo(-5.5, 0);
+      cx.lineTo(-1.5, 0);
+      cx.moveTo(-3.5, -2);
+      cx.lineTo(-3.5, 2);
+      cx.moveTo(4.2, -1.8);
+      cx.arc(4.2, -1.8, .9, 0, Math.PI * 2);
+      cx.moveTo(6.8, 1.8);
+      cx.arc(6.8, 1.8, .9, 0, Math.PI * 2);
+      cx.stroke();
+    } else if(type === 'chat'){
+      cx.beginPath();
+      cx.roundRect(-9, -7, 18, 12, 4);
+      cx.stroke();
+      cx.beginPath();
+      cx.moveTo(-2, 5);
+      cx.lineTo(-5, 9);
+      cx.lineTo(0, 6.8);
+      cx.stroke();
+      cx.beginPath();
+      cx.arc(-3.5, -1, .9, 0, Math.PI * 2);
+      cx.arc(0, -1, .9, 0, Math.PI * 2);
+      cx.arc(3.5, -1, .9, 0, Math.PI * 2);
+      cx.fill();
+    } else if(type === 'target'){
+      cx.beginPath();
+      cx.arc(0, 0, 7.5, 0, Math.PI * 2);
+      cx.arc(0, 0, 3.8, 0, Math.PI * 2);
+      cx.stroke();
+      cx.beginPath();
+      cx.moveTo(-10.5, 0);
+      cx.lineTo(10.5, 0);
+      cx.moveTo(0, -10.5);
+      cx.lineTo(0, 10.5);
+      cx.stroke();
+      cx.beginPath();
+      cx.arc(0, 0, 1.4, 0, Math.PI * 2);
+      cx.fill();
+    }
+
+    cx.restore();
+  }
+
+  function spawnParticle(from, to){
+    const a = nodePos(from), b = nodePos(to);
+    particles.push({
+      x: a.x, y: a.y, tx: b.x, ty: b.y,
+      t: 0, speed: .016 + Math.random()*.008,
+      col: STAGES[from].col, r: 3 + Math.random(),
+    });
+  }
+
+  function draw(){
+    frame++;
+    cx.clearRect(0,0,W,H);
+
+    // Background subtle grid
+    cx.strokeStyle = 'rgba(79,70,229,.05)';
+    cx.lineWidth = 1;
+    for(let x=0;x<W;x+=40){ cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,H);cx.stroke(); }
+    for(let y=0;y<H;y+=40){ cx.beginPath();cx.moveTo(0,y);cx.lineTo(W,y);cx.stroke(); }
+
+    // Draw edges
+    for(let i=0;i<STAGES.length-1;i++){
+      const a=nodePos(i), b=nodePos(i+1);
+      const aActive = (i===ACTIVE.stage||i===ACTIVE.stage+1);
+      const bActive = (i+1===ACTIVE.stage||i+1===ACTIVE.stage+1);
+      const ra = nodeRadius(aActive) + 8;
+      const rb = nodeRadius(bActive) + 8;
+      const angle = Math.atan2(b.y-a.y,b.x-a.x);
+      const sx = a.x + Math.cos(angle) * ra;
+      const sy = a.y + Math.sin(angle) * ra;
+      const ex = b.x - Math.cos(angle) * rb;
+      const ey = b.y - Math.sin(angle) * rb;
+      const grad=cx.createLinearGradient(sx,0,ex,0);
+      grad.addColorStop(0, STAGES[i].col+'55');
+      grad.addColorStop(1, STAGES[i+1].col+'55');
+      cx.beginPath();cx.moveTo(sx,sy);cx.lineTo(ex,ey);
+      cx.strokeStyle=grad;cx.lineWidth=2;cx.stroke();
+
+      // Arrow head
+      const mx=(sx+ex)/2, my=(sy+ey)/2;
+      cx.save();cx.translate(mx,my);cx.rotate(angle);
+      cx.beginPath();cx.moveTo(0,0);cx.lineTo(-10,5);cx.lineTo(-10,-5);cx.closePath();
+      cx.fillStyle=STAGES[i].col+'88';cx.fill();cx.restore();
+    }
+
+    // Move active stage forward every ~120 frames
+    ACTIVE.timer++;
+    if(ACTIVE.timer > 90){
+      ACTIVE.timer=0;
+      spawnParticle(ACTIVE.stage, (ACTIVE.stage+1)%STAGES.length);
+      ACTIVE.stage=(ACTIVE.stage+1)%(STAGES.length-1);
+    }
+
+    // Update & draw particles
+    particles=particles.filter(p=>{
+      p.t=Math.min(p.t+p.speed,1);
+      p.x=p.x+(p.tx-p.x)*p.speed*6;
+      p.y=p.y+(p.ty-p.y)*p.speed*6;
+      cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      cx.fillStyle=p.col;
+      cx.shadowColor=p.col;cx.shadowBlur=10;
+      cx.fill();cx.shadowBlur=0;
+      return p.t<.99;
+    });
+
+    // Draw nodes
+    STAGES.forEach((s,i)=>{
+      const {x,y}=nodePos(i);
+      const isActive=(i===ACTIVE.stage||i===ACTIVE.stage+1);
+      const pulse= isActive ? 1+.15*Math.sin(frame*.1) : 1;
+      const nr=24*pulse;
+
+      // Outer glow
+      const g=cx.createRadialGradient(x,y,0,x,y,nr*2.5);
+      g.addColorStop(0, s.col+(isActive?'55':'22'));
+      g.addColorStop(1,'transparent');
+      cx.beginPath();cx.arc(x,y,nr*2.5,0,Math.PI*2);cx.fillStyle=g;cx.fill();
+
+      // Circle
+      cx.beginPath();cx.arc(x,y,nr,0,Math.PI*2);
+      cx.fillStyle=s.col+'1a';
+      cx.strokeStyle=s.col+(isActive?'dd':'66');
+      cx.lineWidth=isActive?2:1.5;cx.fill();cx.stroke();
+
+      // Icon
+      drawPipelineIcon(s.icon, x, y, pulse, isActive ? '#ffffff' : s.col+'dd');
+
+      // Label
+      cx.fillStyle=isActive?'#fff':s.col+'cc';
+      cx.font=`700 9.5px Inter,sans-serif`;cx.textAlign='center';cx.textBaseline='top';
+      cx.fillText(s.label,x,y+nr+6);
+      cx.fillStyle=s.col+'77';
+      cx.font=`400 8px Inter,sans-serif`;
+      cx.fillText(s.sub,x,y+nr+18);
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  resize();draw();
+  window.addEventListener('resize',()=>{resize();});
+})();
+
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// COUNT-UP STATS
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+(function(){
+  const els = document.querySelectorAll('[data-count]');
+  const seen = new Set();
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting && !seen.has(e.target)){
+        seen.add(e.target);
+        const el=e.target;
+        const target=+el.dataset.count;
+        const suffix=el.dataset.suffix||'';
+        const dur=1600, steps=60;
+        let s=0;
+        const timer=setInterval(()=>{
+          s++;
+          const val=Math.round(target*(s/steps));
+          el.textContent=val+suffix;
+          if(s>=steps){clearInterval(timer);el.textContent=target+suffix;}
+        }, dur/steps);
+      }
+    });
+  },{threshold:.5});
+  els.forEach(el=>io.observe(el));
+})();
+
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// SKILL BARS ANIMATION
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+(function(){
+  const bars = document.querySelectorAll('.skill-bar');
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const bar=e.target;
+        const pct=bar.closest('.skill-item').dataset.pct;
+        setTimeout(()=>{ bar.style.width=pct+'%'; },200);
+        io.unobserve(bar);
+      }
+    });
+  },{threshold:.4});
+  bars.forEach(b=>io.observe(b));
+})();
+
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// CITATION BARS ANIMATION
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+(function(){
+  const bars = document.querySelectorAll('.cite-bar');
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const bar=e.target;
+        const w=bar.dataset.width;
+        setTimeout(()=>{ bar.style.width=w+'%'; },300);
+        io.unobserve(bar);
+      }
+    });
+  },{threshold:.3});
+  bars.forEach(b=>io.observe(b));
+})();
+
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// TYPEWRITER
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+(function(){
+  const phrases=[
+    'Researching Gamification of ADHD Treatment',
+    'Inclusive Digital Health Designer',
+    'NLP and ML as Supporting Tools',
+    'Adaptive Systems for Better Care'
+  ];
+  let pi=0,ci=0,deleting=false;
+  const el=document.getElementById('type-text');
+  if(!el) return;
+  if(prefersReducedMotion){
+    el.textContent = phrases[0];
+    return;
+  }
+  function tick(){
+    const phrase=phrases[pi];
+    if(!deleting){
+      el.textContent=phrase.slice(0,++ci);
+      if(ci===phrase.length){deleting=true;setTimeout(tick,2400);return}
+    } else {
+      el.textContent=phrase.slice(0,--ci);
+      if(ci===0){deleting=false;pi=(pi+1)%phrases.length;setTimeout(tick,400);return}
+    }
+    setTimeout(tick,deleting?40:65);
+  }
+  setTimeout(tick,900);
+})();
+
+// â”€â”€ SIDEBAR TOGGLE â”€â”€
+function toggleSidebar(){
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('mob-overlay');
+  const button = document.getElementById('mob-btn');
+  const isOpen = sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+  button.setAttribute('aria-expanded', String(isOpen));
+}
+
+// â”€â”€ ACTIVE NAV ON SCROLL â”€â”€
+const secs=document.querySelectorAll('section[id]');
+const navAs=document.querySelectorAll('#nav-list a');
+const io2=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navAs.forEach(a=>a.classList.remove('active'));
+      const lnk=document.querySelector(`#nav-list a[href="#${e.target.id}"]`);
+      if(lnk)lnk.classList.add('active');
+    }
+  });
+},{threshold:.3});
+secs.forEach(s=>io2.observe(s));
+
+// â”€â”€ PUBLICATION FILTER â”€â”€
+function filterPubs(type,btn){
+  document.querySelectorAll('.pf').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.pub-card').forEach(card=>{
+    const yr=parseInt(card.dataset.year);
+    let show=false;
+    if(type==='all')show=true;
+    else if(type==='recent')show=yr>=2022;
+    else show=card.dataset.type===type;
+    card.classList.toggle('hidden',!show);
+  });
+}
+
+// â”€â”€ LIGHTBOX â”€â”€
+function openLightbox(item){
+  const sourceImage = item.querySelector('img');
+  if(!sourceImage) return;
+  const ov=document.createElement('div');
+  ov.setAttribute('role','dialog');
+  ov.setAttribute('aria-modal','true');
+  ov.setAttribute('aria-label', sourceImage.alt || 'Expanded gallery image');
+  ov.tabIndex = -1;
+  ov.style.cssText='position:fixed;inset:0;background:rgba(4,6,26,.92);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;backdrop-filter:blur(8px)';
+  const img=document.createElement('img');
+  img.src=sourceImage.src;
+  img.alt=sourceImage.alt;
+  img.style.cssText='max-width:90vw;max-height:90vh;border-radius:14px;box-shadow:0 24px 80px rgba(0,0,0,.8)';
+  ov.appendChild(img);
+  const close = () => ov.remove();
+  ov.onclick=close;
+  ov.addEventListener('keydown', e => {
+    if(e.key === 'Escape'){ close(); }
+  });
+  document.body.appendChild(ov);
+  ov.focus();
+}
+
+document.querySelectorAll('.gal-item').forEach(item=>{
+  item.addEventListener('click',()=>openLightbox(item));
+  item.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      openLightbox(item);
+    }
+  });
+});
+
+document.querySelectorAll('.rc').forEach(card => {
+  const toggleCard = () => {
+    const isOpen = card.classList.toggle('is-open');
+    card.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  };
+
+  card.addEventListener('click', e => {
+    const tag = e.target.tagName;
+    if(tag === 'A' || tag === 'BUTTON') return;
+    toggleCard();
+  });
+
+  card.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      toggleCard();
+    }
+  });
+});
+</script>
+</body>
+</html>
+
+
